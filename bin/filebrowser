@@ -1,0 +1,39 @@
+#!/bin/sh
+
+# very basic file/directory "browser"
+#
+# requires:
+# - rofi
+# - feh (for viewing images)
+# - gnome-mpv (for viewing videos)
+# - firefox (for viewing pdfs)
+# - ranger (for browsing directories)
+
+selection=$(find -L $HOME -path $HOME/.cache -prune -o -name '*' | sed 's@'"$HOME"'@~@g' | \
+	grep -v .git | grep -v cache | grep -v Cache | grep -v chromium | grep -v .nuget | grep -v .mozilla | \
+	rofi -dmenu -i -p 'Open: ')
+
+selection="${selection/\~/$HOME}"
+if [[ -f "$selection" ]]; then
+	# it's a file, choose what to do based on mime type
+	if [[ "$selection" = *.md ]]; then
+		# special case for markdown
+		$VISUAL -- "$selection"
+	else
+		mime=$(file -i "$selection" | awk -F': ' '{print $2}')
+		if [[ "$mime" = text* ]]; then
+			$VISUAL -- "$selection"
+		elif [[ "$mime" = image* ]]; then
+			feh -- "$selection"
+		elif [[ "$mime" = video* ]]; then
+			gnome-mpv -- "$selection"
+		elif [[ "$mime" = application/pdf* ]]; then
+			zathura -- "$selection"
+		fi
+		# TODO: handle archives
+	fi
+elif [[ -d "$selection" ]]; then
+	# show directory with ranger
+	# custom title so we can force floating mode in i3
+	i3-sensible-terminal -t 'ranger-popout' -e "ranger $selection"
+fi

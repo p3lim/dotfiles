@@ -1,0 +1,17 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+@-moz-document url(chrome://browser/content/browser.xul){
+	/* hide some crap */
+	#TabsToolbar .tabbrowser-tab .tab-close-button,
+	#TabsToolbar .tabbrowser-tab .tab-line,
+	/*#TabsToolbar .tabs-newtab-button,*/
+	/*#TabsToolbar > .new-tab-button,*/
+	#TabsToolbar > .alltabs-button {
+		display: none;
+	}
+
+	/* darken the temporary background shown whilst loading a new tab/page */
+	.browserContainer {
+		background-color: #363636 !important;
+	}
+}

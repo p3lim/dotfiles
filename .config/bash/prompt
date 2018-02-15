@@ -1,0 +1,46 @@
+#!/bin/sh
+
+_prompt(){
+	# store previous process' state before we mess it up here
+	local -i err=$?
+	if (( err != 0 )); then
+		# add red color if the previous process failed
+		local _err='\[\033[0;31m\]'
+	fi
+
+	# add "[host] " if we're connected remotely
+	if [[ -n "$(who | awk '{print $5}')" ]]; then
+		local _host='[\[\033[0;33m\]\h\[\033[0m\]] '
+	fi
+
+	# add path
+	local _path="\[\033[0;36m\]\w\[\033[0m\]"
+
+	# add git branch
+	local branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+	if [[ -n "$branch" ]]; then
+		local _git=' '
+		if [[ -n "$(git status -s)" ]]; then
+			# color yellow if changes
+			_git+='\[\033[0;33m\]'
+		else
+			# color green if not
+			_git+='\[\033[0;32m\]'
+		fi
+
+		_git+="($branch)\[\033[0m\]"
+	fi
+
+	# add prompt character
+	local session=$(ps -o comm= -p $PPID)
+	local _prompt='\[\033[0m\]'
+	if [[ "$session" == "sudo" || "$session" == "su" ]]; then
+		_prompt=" #${_prompt}"
+	else
+		_prompt=" >${_prompt}"
+	fi
+
+	PS1="${_host}${_path}${_git}${_err}${_prompt} "
+}
+
+PROMPT_COMMAND=_prompt

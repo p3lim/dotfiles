@@ -1,0 +1,8 @@
+{
+	"show_commit_diff": true,
+	"show_input_in_output": false,
+	"show_panel_for": ["push", "pull", "commit", "checkout", "fetch", "merge"],
+	"silent_fallback": true,
+	"fallback_encoding": "utf-8",
+	"disable_git_init_prompt": true,
+}

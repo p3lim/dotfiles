@@ -1,0 +1,9 @@
+{
+	"word_wrap": "true",
+	"wrap_width": 121,
+	"trim_trailing_white_space_on_save": false,
+	"rulers":
+	[
+		120
+	],
+}

@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# sends notifications when battery drops below threshold
+# and auto-suspends when another threshold is met
+#
+# requires:
+# - acpi
+# - libnotify
+
+WARN_LEVEL=8
+SUSPEND_LEVEL=5
+
+export DISPLAY=:0
+
+acpi -b | awk -F'[,:%]' '/[1-9][0-9]?/ {print $2, $3}' | {
+	read -r status capacity
+
+	if [ "$status" = Discharging ]; then
+		if [ "$capacity" -le "$SUSPEND_LEVEL" ]; then
+			systemctl suspend
+		elif [ "$capacity" -le "$WARN_LEVEL" ]; then
+			user=$(who | awk '{print $1}')
+			sudo -u $user notify-send -u critical "Battery at ${capacity}%!" "Will suspend soon!"
+		fi
+	fi
+}

@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# outputs a colored icon (and ssid if applicable)
+# - if wifi, outputs green/yellow wifi icon (and ssid)
+# - if no wifi but ether, outputs green ether icon
+# - if no ether, outputs red ether icon
+#
+# requires:
+# - systemd-networkd (for networkctl)
+# - wpa_supplicant (for wpa_cli)
+# - awk
+
+wifi_icon=''
+ether_icon=''
+vpn_icon=''
+
+eth=()
+wlan=()
+
+for iface in $(ls /sys/class/net/); do
+	type=$(networkctl status $iface | awk '/Type:/ {print $2}')
+	if [[ "$type" = ether ]]; then
+		eth+=($iface)
+	elif [[ "$type" = wlan ]]; then
+		wlan+=($iface)
+	fi
+done
+
+status(){
+	local state=
+	local vpn=
+	for iface in $(ls /sys/class/net/ | awk '/tun/'); do
+		state=$(networkctl status $iface | awk '/State:/ {print $2}')
+		if [[ "$state" = routable ]]; then
+			vpn="%{F#fca655}$vpn_icon%{F-}"
+			break
+		fi
+	done
+
+	for iface in "${wlan[@]}"; do
+		state=$(networkctl status $iface | awk '/State:/ {print $2 $3}')
+		if ! [[ "$state" = *off* || "$state" = *no-carrier* ]]; then
+			if [[ "$state" = *configured* ]]; then
+				echo "${vpn}%{F#79db72}$wifi_icon%{F-} $(wpa_cli -i $iface status | awk -F= '/^ssid=/ {print $2}')"
+				return
+			elif [[ "$state" = *configuring* ]]; then
+				echo "${vpn}%{F#d7db72}$wifi_icon%{F-}"
+				return
+			fi
+		fi
+	done
+
+	for iface in "${eth[@]}"; do
+		state=$(networkctl status $iface | awk '/State:/ {print $2}')
+		if ! [[ "$state" = no-carrier ]]; then
+			if [[ "$state" = routable ]]; then
+				echo "${vpn}%{F#79db72}$ether_icon%{F-}"
+				return
+			fi
+		fi
+	done
+
+	echo "%{F#ff0000}$ether_icon%{F-}"
+}
+
+(journalctl -fu systemd-networkd & journalctl -fu openvpn-client@anna) | while read -r event; do
+	status
+done

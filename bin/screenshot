@@ -1,0 +1,72 @@
+#!/bin/sh
+
+# Small tool that takes screenshots with maim,
+# names the file with four randomized characters,
+# uploads them to a (webdav) host of your choice,
+# then copies that link to your clipboard and
+# lets you know it succeeded or failed.
+#
+# requires:
+# - maim
+# - curl
+# - xclip
+# - libnotify (for notify-send)
+# - xdotool
+# - awk
+# - tr
+
+# parse options from user, s=selection, w=window
+opt=
+[[ "$1" == "s" ]] && opt='-s'
+[[ "$1" == "w" ]] && opt="-i $(xdotool getactivewindow)"
+
+# pull settings
+source ~/.config/env/screenshot
+
+# set path
+path='/tmp/scrot'
+if ! [[ -d "$path" ]]; then
+	mkdir -p $path
+fi
+
+# set file name
+file=$(date +%Y-%m-%d-%H%M%S.png)
+
+# take screenshot
+maim $opt -u "$path/$file"
+if (( $? != 0 )); then
+	# bail out if maim was unsuccessful
+	exit 1
+fi
+
+# attempt upload
+upload(){
+	# generate a random 4-character filename
+	local randfile="$(date +%s | sha1sum | awk '{print substr($0,0,4)}').png"
+
+	# copy
+	cp "$path/$file" "$path/$randfile"
+
+	# upload the file
+	local status=$(curl -u $auth -T "$path/$randfile" "$host" -i | awk '/^HTTP\// {print $2}')
+
+	# cleanup
+	rm "$path/$randfile"
+
+	# evaluate the status
+	if [[ "$status" = *201* ]]; then
+		# file was successfully uploaded
+		echo "$src/$randfile" | xclip -selection c
+		notify-send 'Upload successful!' "$src/$randfile"
+		exit 0
+	elif [[ "$status" = *204* ]]; then
+		# file already exists with that name, try again
+		upload
+	else
+		# some error, let the user know
+		notify-send -u critical 'Upload failed!' "Error: $(echo "${status/100/}" | tr -d '[:space:]')"
+		exit 2
+	fi
+}
+
+upload

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# megasync doesn't seem to have a daemon/background option,
+# so we have to send 'Escape' to the window when we start up.
+
+until xdotool search --onlyvisible --class '^megasync$' ; do
+	sleep .2
+done
+
+xdotool key Escape

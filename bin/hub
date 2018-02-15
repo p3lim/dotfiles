@@ -1,0 +1,131 @@
+#!/usr/bin/env python
+
+import sys
+import re
+import subprocess
+
+URL_SELF = 'git@github.com:%s/%s'
+URL_OTHER = 'git://github.com/%s'
+
+CONFIG_USER = 'user.github'
+PROTOCOLS = '^((ssh|git|http|https):\/\/)|(git@)'
+
+def git(params=[]):
+	subprocess.call(['git'] + params)
+
+def read(params=[]):
+	return subprocess.Popen(params, stdout=subprocess.PIPE).communicate()[0].strip()
+
+def get_username():
+	name = read(['git', 'config', '--get', CONFIG_USER])
+	if not name:
+		name = input("Found no username, please specify yours: ").split()
+
+		if len(name):
+			name = name[0]
+			git(['config', '--global', CONFIG_USER, name])
+			print('Set username to \'' + name + '\'')
+	else:
+		name = name.decode('utf-8')
+
+	return name
+
+def replace_url(url):
+	if re.match('^(?:[0-9A-Za-z-]+|[0-9A-Za-z-]+\/[0-9A-Za-z-_]+)$', url):
+		if re.match('^[0-9A-Za-z-]+\/[0-9A-Za-z-_]+$', url):
+			return URL_OTHER % (url)
+		elif re.match('^[0-9A-Za-z-]+$', url):
+			return URL_SELF % (get_username(), url)
+
+def path(*args):
+	if (len(sys.argv) - 1) >= len(args):
+		params = iter(sys.argv[1:(len(args) + 1)])
+		for param in params:
+			index = sys.argv.index(param)
+			arg = args[(index - 1):index][0]
+			if arg != param:
+				return False
+		return True
+	return False
+
+if path('clone'):
+	'''
+	Allows cloning by `user/repo` or `repo` if the user owns it.
+
+	$ git clone [ARGS] <url|user/repo|repo>
+
+	'''
+
+	valueParams = '^--(jobs|template|reference|origin|branch|upload-pack|config|depth)|-[jobuc]$'
+
+	params = iter(sys.argv[2:])
+	for param in params:
+		if re.match('^-', param):
+			if re.match(valueParams, param):
+				next(params)
+		else:
+			index = sys.argv.index(param)
+
+			replaced_url = replace_url(param)
+			if replaced_url:
+				param = replaced_url
+
+			if re.match(PROTOCOLS, param):
+				sys.argv[index] = url = param
+				break
+
+	git(sys.argv[1:])
+elif path('remote', 'add'):
+	'''
+	Allows adding remotes by `user/repo` or `repo` if the user owns it.
+
+	$ git remote add [ARGS] <name> <url|user/repo|repo>
+
+	'''
+
+	valueParams = '^--(track|master)|-[tm]$'
+
+	params = iter(sys.argv[4:])
+	for param in params:
+		if re.match('^-', param):
+			if re.match(valueParams, param):
+				next(params)
+		else:
+			index = sys.argv.index(param)
+
+			replaced_url = replace_url(param)
+			if replaced_url:
+				param = replaced_url
+
+			if re.match(PROTOCOLS, param):
+				sys.argv[index] = url = param
+				break
+
+	git(sys.argv[1:])
+elif path('remote', 'mirror'):
+	'''
+	Adds a remote push mirror by `user/repo` or `repo` if the user owns it.
+
+	$ git remote mirror [BRANCH] <url|user/repo|repo>
+
+	'''
+
+	if not read(['git', 'config', '--get', 'remote.origin.pushurl']):
+		url = read(['git', 'config', '--get', 'remote.origin.url']).decode('utf-8')
+		git(['remote', 'set-url', 'origin', '--push', '--add', url])
+
+	if len(sys.argv) < 3:
+		print('Usage: git remote mirror [branchname] <url|user/repo|repo>')
+	else:
+		branch = sys.argv[3]
+		url = ''
+
+		if len(sys.argv) > 4:
+			url = sys.argv[4]
+		else:
+			url = branch
+			branch = 'origin'
+
+		git(['remote', 'set-url', branch, '--push', '--add', replace_url(url) or url])
+else:
+	git(sys.argv[1:])

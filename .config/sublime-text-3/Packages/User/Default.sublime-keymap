@@ -1,0 +1,49 @@
+[
+	// Tweaks to the default keybindings
+	{ "keys": ["ctrl+n"], "command": "new_window" },
+	{ "keys": ["ctrl+t"], "command": "new_file" },
+	{ "keys": ["ctrl+e"], "command": "open_dir", "args": {"dir": "$file_path"} },
+	{ "keys": ["ctrl+shift+o"], "command": "prompt_open_folder" },
+	{ "keys": ["ctrl+shift+q"], "command": "show_panel", "args": {"panel": "console", "toggle": true} },
+
+	// Use GitSavvy for Git actions
+	{ "keys": ["ctrl+alt+g"], "command": "gs_show_status" },
+	{ "keys": ["ctrl+alt+d"], "command": "gs_diff" },
+	{ "keys": ["ctrl+alt+p"], "command": "gs_push_to_branch_name" },
+	{ "keys": ["ctrl+alt+shift+p"], "command": "gs_tag_push", "args": {"push_all": true} },
+
+	// Build keybindings for C++
+	{ "keys": ["ctrl+b"], "command": "build", "operand": "text.cpp" },
+
+	// panels and tabs
+	{ "keys": ["alt+1"], "command": "focus_group", "args": { "group": 0 } },
+	{ "keys": ["alt+2"], "command": "focus_group", "args": { "group": 1 } },
+	{ "keys": ["alt+3"], "command": "focus_group", "args": { "group": 2 } },
+	{ "keys": ["alt+4"], "command": "focus_group", "args": { "group": 3 } },
+	{ "keys": ["alt+5"], "command": "focus_group", "args": { "group": 4 } },
+	{ "keys": ["alt+6"], "command": "focus_group", "args": { "group": 5 } },
+	{ "keys": ["alt+7"], "command": "focus_group", "args": { "group": 6 } },
+	{ "keys": ["alt+8"], "command": "focus_group", "args": { "group": 7 } },
+	{ "keys": ["alt+9"], "command": "focus_group", "args": { "group": 8 } },
+	{ "keys": ["ctrl+1"], "command": "select_by_index", "args": { "index": 0 } },
+	{ "keys": ["ctrl+2"], "command": "select_by_index", "args": { "index": 1 } },
+	{ "keys": ["ctrl+3"], "command": "select_by_index", "args": { "index": 2 } },
+	{ "keys": ["ctrl+4"], "command": "select_by_index", "args": { "index": 3 } },
+	{ "keys": ["ctrl+5"], "command": "select_by_index", "args": { "index": 4 } },
+	{ "keys": ["ctrl+6"], "command": "select_by_index", "args": { "index": 5 } },
+	{ "keys": ["ctrl+7"], "command": "select_by_index", "args": { "index": 6 } },
+	{ "keys": ["ctrl+8"], "command": "select_by_index", "args": { "index": 7 } },
+	{ "keys": ["ctrl+9"], "command": "select_by_index", "args": { "index": 8 } },
+	{ "keys": ["ctrl+alt+1"], "command": "move_to_group", "args": { "group": 0 } },
+	{ "keys": ["ctrl+alt+2"], "command": "move_to_group", "args": { "group": 1 } },
+	{ "keys": ["ctrl+alt+3"], "command": "move_to_group", "args": { "group": 2 } },
+	{ "keys": ["ctrl+alt+4"], "command": "move_to_group", "args": { "group": 3 } },
+	{ "keys": ["ctrl+alt+5"], "command": "move_to_group", "args": { "group": 4 } },
+	{ "keys": ["ctrl+alt+6"], "command": "move_to_group", "args": { "group": 5 } },
+	{ "keys": ["ctrl+alt+7"], "command": "move_to_group", "args": { "group": 6 } },
+	{ "keys": ["ctrl+alt+8"], "command": "move_to_group", "args": { "group": 7 } },
+	{ "keys": ["ctrl+alt+9"], "command": "move_to_group", "args": { "group": 8 } },
+
+	// The author of ANF thinks linux == mac
+	{ "keys": ["ctrl+alt+n"], "command": "advanced_new_file_new" },
+]

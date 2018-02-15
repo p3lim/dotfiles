@@ -1,0 +1,13 @@
+{
+	"selector": "source.c++",
+	"file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
+	"working_dir": "${file_path}",
+	"linux": {
+		"cmd": "g++ -g \"${file_name}\" -o \"${file_base_name}.o\" ; i3-sensible-terminal --hold -e '${file_path}/${file_base_name}.o'",
+		"shell": true
+	},
+	"windows": {
+		"cmd": "bash -c 'g++ -g \"${file_name}\" -o \"${file_base_name}.o\"' && start cmd /c \"bash -c './${file_base_name}.o' & echo. & pause\"",
+		"shell": true
+	}
+}

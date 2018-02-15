@@ -1,0 +1,45 @@
+! colors
+*background: #333333
+*foreground: #ffffff
+*cursorColor: #ffffff
+
+! black
+*.color0: #000000
+*.color8: #000000
+
+! red
+*.color1: #E84F4F
+*.color9: #E84F4F
+
+! green
+*.color2: #B8D68C
+*.color10: #B8D68C
+
+! yellow
+*.color3: #E1AA5D
+*.color11: #E1AA5D
+
+! blue
+*.color4: #7DC1CF
+*.color12: #7DC1CF
+
+! magenta
+*.color5: #9B64FB
+*.color13: #9B64FB
+
+! cyan
+*.color6: #6D878D
+*.color14: #6D878D
+
+! white
+*.color7: #ffffff
+*.color15: #ffffff
+
+
+! i3
+i3wm.active: #cccccc
+i3wm.inactive: #555555
+i3wm.urgent: #ee829f
+
+! polybar
+polybar.warning: #de0037

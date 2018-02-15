@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# removes orphaned packages
+
+packages=$(pacman -Qtdq)
+if [[ -n "$packages" ]]; then
+	sudo pacman -Rns $(pacman -Qtdq)
+else
+	echo 'No orphaned packages'
+fi

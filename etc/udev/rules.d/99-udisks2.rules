@@ -1,0 +1,2 @@
+# Mount USB drives to "/media/<drive>" instead of "/run/media/<user>/<drive>"
+ENV{ID_FS_USAGE}=="filesystem|other|crypto", ENV{UDISKS_FILESYSTEM_SHARED}="1"

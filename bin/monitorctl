@@ -1,0 +1,80 @@
+#!/usr/bin/python
+
+# lists monitors and allows easy duplication
+#
+# TODO:
+# - support extending, was really buggy when I tried to make it
+#   work with monitors of different resolution
+#
+# requires:
+# - xorg-xrandr
+# - rofi
+# - awk
+
+import subprocess
+
+def bash(cmd):
+	return subprocess.check_output(['sh', '-c', cmd]).decode().strip()
+
+def rofi(options):
+	args = '-dmenu -i -format i -p "Monitor: " -markup-rows -l {lines}'
+	return bash(('echo -e "{entries}" | rofi %s' % args).format(**options))
+
+class xrandr(object):
+	@classmethod
+	def list(self):
+		lines = bash('xrandr -q | awk \'/^[^ ]/ && NR > 1 {print $1, $2, $3}\'').split('\n')
+		outputs = []
+		for line in lines:
+			data = line.split()
+
+			if data[1] == 'connected':
+				active = data[2] == 'primary' or data[2][0].isdigit() # really hacky
+				state = 'connected, %sactive' % ('in' if not active else '')
+			else:
+				active = False
+				state = 'disconnected'
+
+			outputs.append({
+				'name': data[0],
+				'active': active,
+				'state': state,
+				'primary': data[2] == 'primary'
+			})
+
+		return outputs
+
+	@classmethod
+	def connect(self, output):
+		if not output['active']:
+			primary = bash('xrandr -q | awk \'/primary/ {print $0}\'').split()
+			res = primary[3][:-4]
+			bash('xrandr --output %s --mode %s --panning %s --primary --output %s --mode %s --panning %s' % (primary[0], res, res, output['name'], res, res))
+
+	@classmethod
+	def disconnect(self, output):
+		if output['active'] and not output['primary']:
+			primary = bash('xrandr -q | awk \'/primary/ {print $1}\'')
+			bash('xrandr --output %s --auto --output %s --off' % (primary, output['name']))
+
+outputs = xrandr.list()
+
+lines = ''
+for output in outputs:
+	line = '{name}\t<i>{state}'.format(**output)
+	if output['primary']:
+		line += ' (primary)'
+	line += '</i>\n'
+	lines += line
+
+selected = rofi({
+	'lines': len(outputs),
+	'entries': lines.strip()
+})
+
+if selected:
+	output = outputs[int(selected)]
+	if output['active']:
+		xrandr.disconnect(output)
+	else:
+		xrandr.connect(output)

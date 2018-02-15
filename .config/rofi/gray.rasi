@@ -1,0 +1,68 @@
+* {
+	/* global settings */
+	font: "ProggyCleanTTSZ 12";
+
+	/* color variables */
+	border: #cccccc;
+	background: #333333;
+	background-highlight: #3c3c3c;
+	foreground: #ffffff;
+	foreground-urgent: #cc6666;
+	foreground-active: #81a2be;
+	foreground-inactive: #777777;
+
+	highlight: underline #ffffff;
+
+	background-color: @background;
+	text-color: @foreground;
+}
+
+window {
+	padding: 8;
+	border: 1px solid;
+	border-color: @border;
+}
+
+mainbox {
+}
+
+textbox {
+}
+
+listview {
+	border: 5px solid 0px 0px;
+	border-color: @background;
+	scrollbar: true;
+	/*dynamic: true;*/
+}
+
+element {
+	text-color: @foreground-inactive;
+	padding: 2px;
+}
+
+element.urgent {
+	text-color: @foreground-urgent;
+}
+
+element.active {
+	text-color: @foreground-active;
+}
+
+element.selected.normal {
+	text-color: @foreground;
+	background-color: @background-highlight;
+}
+
+case-indicator {
+	text-color: @background;
+}
+
+scrollbar {
+	handle-color: @foreground-inactive;
+	handle-width: 1px;
+}
+
+configuration {
+	display-drun: "Start: ";
+}

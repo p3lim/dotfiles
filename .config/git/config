@@ -1,0 +1,59 @@
+[user]
+	name = Adrian L Lange
+	email = mail@p3lim.net
+
+	# https://gist.github.com/p3lim/1124e020ed7044ea5e0ed65deb748e5e
+	github = p3lim
+
+[core]
+	# removes carriage returns in commits but not in code
+	autocrlf = input
+	# commits symbolic links as text files containing the path
+	symlinks = true
+	# use Sublime Text (in a new window) as our editor
+	editor = subl3 -nw
+	# highlights carriage returns in diffs
+	whitespace = cr-at-eol
+
+[interactive]
+	# adds abbreviated options when doing interactive rebasing
+	singleKey = true
+
+[push]
+	# forces push to a matching remote branch name
+	default = simple
+	# pushes tags along with 'git push'
+	followTags = true
+
+[tag]
+	# sorts tags as if they were versions
+	sort = version:refname
+
+[alias]
+	# prunes local refs that don't exist remotely any more
+	prune = fetch --prune
+	# deletes last commit
+	undo = reset --soft HEAD^
+	# stashes all files, including untracked
+	stash-all = stash save --include-untracked
+	# compact graphically formatted logs
+	l = log --pretty-format=\"%C(yellow)%h%C(reset) %s %C(blue)[%an]%C(reset)%C(red)%d\" --graph
+	# starts an interactive rebase N commits before HEAD
+	re = "!f(){ git rebase -i HEAD~$1; }; f"
+
+[status]
+	# diplay summaries for submodules
+	submoduleSummary = true
+
+[color]
+	ui = true
+	diff = auto
+	status = auto
+	branch = auto
+	pager = true
+	interactive = auto
+
+[url "https://github.com/"]
+	insteadOf = gh:// # e.g. gh://p3lim/dotfiles.git
+[url "https://aur.archlinux.org/"]
+	insteadOf = aur:// # e.g. aur://spotify.git

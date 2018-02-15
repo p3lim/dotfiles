@@ -1,0 +1,30 @@
+# Ctrl+Left/Right to move by whole words
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+
+# Ctrl+Backspace/Delete to delete whole words in both directions
+"\e[3;5~": kill-word
+"\C-_": backward-kill-word
+
+# Ctrl+Shift+Backspace/Delete to delete to start/end of line
+"\e[3;6~": kill-line
+"\xC2\x9F": backward-kill-line	# for UTF-8
+#"\x9F": backward-kill-line	# for ISO-8859-x
+#"\e\C-_": backward-kill-line	# for any other charset
+
+# Ctrl+Up/Down for searching command history
+#"\e[1;5A": history-search-backward
+#"\e[1;5B": history-search-forward
+
+# ignore case for completion
+set completion-ignore-case on
+
+# crop the prefix in completion lists
+set completion-prefix-display-length 2
+
+# show completions on the first tab instead of the second
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+
+# make symbols case-insensitive
+set completion-map-case on

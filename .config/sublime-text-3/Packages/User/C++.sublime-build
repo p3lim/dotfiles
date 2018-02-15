@@ -1,0 +1,12 @@
+{
+	"selector": "source.c++",
+	"file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
+	"linux": {
+		"cmd": "g++ -g -Wall *.cpp -o \"${file_base_name}.o\" ; i3-sensible-terminal --hold -e '${file_path}/${file_base_name}.o'",
+		"shell": true
+	},
+	"windows": {
+		"cmd": "bash -c 'g++ -g -Wall *.cpp -o \"${file_base_name}.o\"' && start cmd /c \"bash -c './${file_base_name}.o' & echo. & pause\"",
+		"shell": true
+	}
+}

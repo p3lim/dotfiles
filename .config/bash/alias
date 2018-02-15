@@ -1,0 +1,36 @@
+#!/bin/sh
+
+#colors
+alias grep='grep --color=auto'
+alias diff='diff --color=auto'
+
+# sorts uppercase first, colors, formats date & file sizes, sorts directories first
+alias ls='LC_COLLATE=C ls --color=auto --time-style=long-iso -hF --group-directories-first'
+
+# shorthands
+alias ll='ls -lA'
+alias rmd='rm -rf'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias -- -='cd -' # go to previous dir with "-"
+alias cd.='cd $(readlink -f .)' # go to link source with ""
+alias week='date +%V'
+alias lm='stat -c "%a %n" *' # shows permissions for files in current directory
+
+# confirm before overwrite
+alias cp='cp -i'
+alias mv='mv -i'
+
+# human-readable sizes
+alias df='df -h'
+
+# software-specific
+alias py=python3
+alias m=micro
+alias posh=pwsh
+
+if [[ -z "$SUDO_USER" ]]; then
+	alias subl=subl3
+	alias git="py ~/bin/hub"
+fi

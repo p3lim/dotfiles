@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# dims the screen until killed
+
+get_brightness(){
+	xbacklight -get
+}
+
+set_brightness(){
+	xbacklight -steps 1 -set $1
+}
+
+trap 'exit 0' TERM INT
+trap "set_brightness $(get_brightness); kill %%" EXIT
+set_brightness 1
+sleep 2147483647 &
+wait

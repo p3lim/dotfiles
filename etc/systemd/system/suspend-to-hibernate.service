@@ -1,0 +1,27 @@
+[Unit]
+Description=Delayed hibernation trigger for suspend
+Documentation=https://wiki.archlinux.org/index.php/Power_management
+Conflicts=hibernate.target hybrid-sleep.target
+Before=sleep.target
+StopWhenUnneeded=true
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+Environment="WAKEALARM=/sys/class/rtc/rtc0/wakealarm"
+Environment="SLEEPLENGTH=+2hour"
+ExecStart=-/usr/bin/sh -c 'echo -n "alarm set for "; date +%%s -d$SLEEPLENGTH | tee $WAKEALARM'
+ExecStop=-/usr/bin/sh -c ' \
+	alarm=$(cat $WAKEALARM); \
+	now=$(date +%%s); \
+	if [ -z "$alarm" ] || [ "$now" -ge "$alarm" ]; then \
+		echo "hibernate triggered"; \
+		systemctl hibernate; \
+	else \
+		echo "normal wakeup"; \
+	fi; \
+	echo 0 > $WAKEALARM; \
+'
+
+[Install]
+WantedBy=sleep.target

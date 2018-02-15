@@ -1,0 +1,41 @@
+[options]
+font = ProggyCleanTTSZ 12
+cursor_shape = underline
+allow_bold = false
+
+[colors]
+background = #333333
+foreground = #ffffff
+cursor = #ffffff
+
+# black
+color0 = #000000
+color8 = #555555
+
+# red
+color1 = #E84F4F
+color9 = #E84F4F
+
+# green
+color2 = #B8D68C
+color10 = #B8D68C
+
+# yellow
+color3 = #E1AA5D
+color11 = #E1AA5D
+
+# blue
+color4 = #7DC1CF
+color12 = #7DC1CF
+
+# magenta
+color5 = #9B64FB
+color13 = #9B64FB
+
+# cyan
+color6 = #6D878D
+color14 = #6D878D
+
+# white
+color7 = #ffffff
+color15 = #ffffff

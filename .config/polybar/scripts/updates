@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# outputs the pacman/aur updates available
+#
+# requires:
+# - pacman
+# - cower
+# - netcat (for nc)
+
+output=
+
+if nc -zw1 8.8.8.8 443 > /dev/null 2>&1; then
+	pac=$(checkupdates | wc -l)
+	aur=$(cower -u | wc -l)
+
+	if [ $((pac + aur)) -gt 0 ]; then
+		output="$pac/$aur"
+	fi
+fi
+
+echo "$output"

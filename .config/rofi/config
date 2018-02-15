@@ -1,0 +1,13 @@
+! set the theme
+rofi.theme: gray
+
+! positioning seems broken in themes, set it here
+rofi.location: 1
+rofi.xoffset: 14
+rofi.yoffset: 32
+
+! lines set in theme can't be overwritten
+rofi.lines: 20
+
+! width set in theme can't be overwritten
+rofi.width: 30

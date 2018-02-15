@@ -1,0 +1,37 @@
+{
+	"always_show_minimap_viewport": true,
+	"bold_folder_labels": true,
+	"color_scheme": "Packages/Theme - Toxin/Toxin.tmTheme",
+	"default_encoding": "UTF-8",
+	"enable_tab_scrolling": false,
+	"ensure_newline_at_eof_on_save": true,
+	"fade_fold_buttons": false,
+	"font_face": "ProggyCleanTTSZ",
+	"font_size": 12,
+	"hide_gutter_unfolded": true,
+	"hide_sidebar_heading": true,
+	"highlight_line": true,
+	"highlight_modified_tabs": true,
+	"highlight_trailing_whitespace": true,
+	"ignored_packages":
+	[
+		"ShellCommand",
+		"Vintage"
+	],
+	"rulers":
+	[
+		100
+	],
+	"show_encoding": true,
+	"show_tab_close_buttons": false,
+	"strip_whitespace_lines_on_save": true,
+	"theme": "Toxin.sublime-theme",
+	"theme_font_options":
+	[
+		"gdi"
+	],
+	"tree_animation_enabled": false,
+	"update_check": false,
+	"use_minimap_as_scrollbar": true,
+	"word_wrap": false
+}

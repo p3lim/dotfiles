@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# defaults
+export VISUAL=subl3
+export EDITOR=micro
+export BROWSER=firefox
+export TERM=xterm-256color
+export TZ=Europe/Oslo
+
+# scripts
+export PATH=$HOME/bin:$PATH
+
+# colors for man pages
+export LESS_TERMCAP_mb=$'\e[0;36m'
+export LESS_TERMCAP_md=$'\e[0;31m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[0;34;32m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[0;34m'
+
+# autocorrect typos in 'cd'
+shopt -s cdspell
+
+# don't autocomplete tab on empty line
+shopt -s no_empty_cmd_completion

@@ -1,0 +1,342 @@
+#!/usr/bin/python
+
+# wifi manager
+#
+# requires:
+# - systemd-networkd (for networkctl)
+# - wpa_supplicant (for wpa_cli)
+# - rofi
+# - awk
+
+# TODO:
+# - 802.1x support
+# - format signal (bars perhaps?)
+# - rewrite security methods (parse_security)
+# - custom binds
+#	- rescan (ALT+1 ?)
+#	- remove known network (ALT+4 ?)
+
+import re
+import subprocess
+
+MANUAL_STR = 'Manually add network'
+CURRENT_COLOR = '#00ff00'
+KNOWN_COLOR = '#88ccff'
+MAX_ENTRIES = 25
+
+# wish I could do this with python instead
+WATCH_SCRIPT='''
+poke(){
+	while true; do
+		printf '\n'
+		sleep 1
+	done
+}
+(poke) | wpa_cli -i %s | while read line; do
+	echo "$line"
+done
+'''
+
+def bash(cmd, async=False):
+	p = subprocess.Popen(['sh', '-c', cmd], stdout=subprocess.PIPE)
+	if async:
+		return p
+	else:
+		p.wait()
+		return p.communicate()[0].decode().strip()
+
+class rofi(object):
+	proc = None
+
+	def __new__(self, options):
+		self.kill()
+
+		args = '-dmenu -i -format {format} -p "WiFi: " -markup-rows -l {lines}'
+		if 'width' in options:
+			args += ' -width -{width}'
+		if 'title' in options:
+			args = args.replace('WiFi:', 'WiFi {title}:')
+		if 'args' in options:
+			args += ' {args}'
+		if not 'format' in options:
+			options['format'] = 'i'
+		if not 'entries' in options:
+			options['entries'] = ''
+		if not 'lines' in options:
+			options['lines'] = 0
+
+		self.proc = bash(('echo -e "{entries}" | rofi %s' % args).format(**options), True)
+		self.wait()
+		return self.proc.communicate()[0].decode().strip()
+
+	@classmethod
+	def wait(self):
+		if not self.proc is None:
+			self.proc.wait()
+
+	@classmethod
+	def kill(self):
+		if not self.proc is None:
+			self.proc.kill()
+			self.wait()
+			self.proc = None
+
+	@classmethod
+	def message(self, msg):
+		self.kill()
+		self.proc = bash('rofi -e "WiFi: %s"' % msg, True)
+
+class wpa(object):
+	def __init__(self):
+		self.iface = bash('networkctl list --no-legend | awk \'$3 == "wlan" {print $2}\'')
+
+	def cli(self, cmd):
+		return bash('wpa_cli -i %s %s' % (self.iface, cmd))
+
+	def scan(self):
+		rofi.message('Scanning...')
+
+		if self.cli('scan') != 'OK':
+			rofi.message('Scan failed!')
+		else:
+			watch = bash(WATCH_SCRIPT % self.iface, True)
+			while True:
+				line = watch.stdout.readline()
+				if line.startswith(b'> \r'):
+					if line.find(b'CTRL-EVENT-SCAN-RESULTS') > 0:
+						watch.kill()
+						self.show_results()
+						break
+					elif line.find(b'CTRL-EVENT-SCAN-FAILED') > 0:
+						watch.kill()
+						rofi.message('Scan failed!')
+						break
+
+	def show_results(self):
+		entries = []
+		ssids = {}
+		for line in self.cli('scan_results').split('\n')[1:]:
+			data = line.split('\t')
+			if not data[4]:
+				# avoid APs without an ssid
+				continue
+
+			ssid = data[4].rstrip('\\x00')
+			if len(ssid) != len(ssid.encode()):
+				# avoid APs with a bogus ssid
+				continue
+			if len(ssid) == 0:
+				# avoid APs without a ssid length
+				continue
+
+			if ssid in ssids:
+				# avoid duplicates
+				continue
+
+			ssids[ssid] = True
+			entries.append({
+				'bssid': data[0],
+				'frequency': int(data[1]) / 1000,
+				'dBm': data[2],
+				'security': self.parse_security(data[3]),
+				'ssid': ssid
+			})
+
+		# for adding networks manually
+		entries.append({
+			'ssid': MANUAL_STR,
+			'dBm': '-99',
+			'security': '',
+			'bssid': ''
+		})
+
+		entries = sorted(entries, key=lambda e: e['dBm'])
+		lines, width = self.format_entries(entries)
+
+		selected = rofi({
+			'lines': min(MAX_ENTRIES, len(entries)),
+			'width': width + 1,
+			'entries': '\n'.join(lines).strip()
+		})
+
+		if selected:
+			self.select_entry(entries[int(selected)])
+
+	def select_entry(self, entry):
+		if entry['ssid'] == MANUAL_STR:
+			self.add_manual()
+			return
+
+		if entry['bssid'] == self.active_network():
+			return
+
+		networks = self.known_networks()
+		ssid = entry['ssid']
+		if ssid in networks:
+			self.cli('select_network %s' % networks.index(ssid))
+		else:
+			security = entry['security']
+			if len(security) == 0:
+				self.connect(ssid)
+			elif len(security) == 1:
+				self.authenticate(entry, security[0])
+			else:
+				self.select_security(entry)
+
+	def select_security(self, entry):
+		security = entry['security']
+		selected = rofi({
+			'lines': len(security),
+			'entries': '\n'.join(security).strip(),
+			'title': 'Authentication Method'
+		})
+
+		if selected:
+			self.authenticate(entry, security[int(selected)])
+
+	def authenticate(self, entry, method):
+		if method == 'Open':
+			self.connect(entry['ssid'], [
+				'key_mgmt NONE'
+			])
+
+		elif re.search('WPA2-PSK', method) or re.search('WPA2-PSK', method):
+			pwd = rofi({
+				'format': 'f',
+				'title': 'Passphrase',
+				'args': '-password'
+			})
+
+			if pwd:
+				if len(pwd) >= 8:
+					self.connect(entry['ssid'], [
+						'psk \'"%s"\'' % pwd
+					])
+				else:
+					rofi.message('Passphrase too short!')
+
+		elif method == 'WEP':
+			key = rofi({
+				'format': 'f',
+				'title': 'Key'
+			})
+
+			if key:
+				if len(key) in (10, 26) and re.match('[A-Za-z0-9]+', key):
+					self.connect(entry['ssid'], [
+						'key_mgmt NONE',
+						'wep_key0 \'"%s"\'' % key,
+						'wep_tx_keyidx 0'
+					])
+				else:
+					rofi.message('Invalid key!')
+
+		elif method == 'WPS':
+			pin = rofi({
+				'format': 'f',
+				'title': 'Pin'
+			})
+
+			if pin:
+				if pin.isdigit() and self.cli('wps_check_pin %s' % pin) != 'FAIL':
+					self.cli('wps_pin %s %s' % (entry['bssid'], pin))
+				else:
+					rofi.message('Invalid pin!')
+
+		else:
+			rofi.message('"%s" is not supported!' % method)
+
+	def connect(self, ssid, attrs=[]):
+		index = self.cli('add_network')
+
+		self.cli('set_network %s ssid \'"%s"\'' % (index, ssid))
+		for attr in attrs:
+			self.cli('set_network %s %s' % (index, attr))
+
+		self.cli('enable_network %s' % index)
+		self.cli('select_network %s' % index) # TODO: find an alternative that doesn't disable all other networks
+		self.cli('save_config')
+		self.cli('reconfigure')
+
+	def add_manual(self):
+		ssid = rofi({
+			'format': 'f',
+			'title': 'SSID'
+		})
+
+		if not ssid or len(ssid) == 0:
+			return
+
+		methods = ['Open', 'WPA-PSK', 'WPA2-PSK', 'WEP'] # TODO: add more
+		method = rofi({
+			'lines': len(methods),
+			'entries': '\n'.join(methods).strip(),
+			'title': 'Security method'
+		})
+
+		if method:
+			self.authenticate({'ssid': ssid}, methods[int(method)])
+
+	def format_entries(self, entries):
+		ssid_width = 0
+		sec_width = 0
+
+		lines = []
+		for entry in entries:
+			security = ' '.join(entry['security'])
+
+			ssid_width = max(ssid_width, len(entry['ssid']))
+			sec_width = max(sec_width, len(security))
+
+			lines.append('%s{}   %s{}   %s' % (
+				entry['ssid'],
+				security,
+				entry['dBm']
+			))
+
+		for i, line in enumerate(lines):
+			lines[i] = line.format(
+				' ' * (ssid_width - len(entries[i]['ssid'])),
+				' ' * (sec_width - len(' '.join(entries[i]['security'])))
+			)
+
+		width = len(max(lines, key=len))
+
+		current = self.active_network()
+		known = self.known_networks()
+		for i, line in enumerate(lines):
+			ssid = entries[i]['ssid']
+			if entries[i]['bssid'] == current:
+				lines[i] = line.replace(ssid, '<span foreground=\'%s\'>%s</span>' % (CURRENT_COLOR, ssid))
+			elif ssid in known:
+				lines[i] = line.replace(ssid, '<span foreground=\'%s\'>%s</span>' % (KNOWN_COLOR, ssid))
+
+		# for the manual entry
+		lines[-1] = entries[-1]['ssid']
+
+		return lines, width
+
+	def parse_security(self, raw):
+		delimiter = ']'
+		methods = [e+delimiter for e in raw.split(delimiter) if e]
+		if '[ESS]' in methods:
+			methods.remove('[ESS]')
+
+		if not methods:
+			methods.append('[Open]')
+
+		return methods
+
+	def active_network(self):
+		return self.cli('status | awk -F\'=\' \'/^bssid=/ {print $2}\'')
+
+	def known_networks(self):
+		return self.cli('list_networks | awk \'NR > 1 {print $2}\'').split()
+
+wpa().scan()
+
+# '▂▄▆█'
+# '▂▄▆_'
+# '▂▄__'
+# '▂___'
+# '___'

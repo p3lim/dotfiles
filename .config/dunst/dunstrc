@@ -1,0 +1,52 @@
+[global]
+	alignment = left
+	browser = /usr/bin/firefox -new-tab
+	follow = none
+	font = ProggyCleanTTSZ 12
+	format = "%s\n%b"
+	frame_color = "#8EC07C"
+	frame_width = 1
+	geometry = "300x8-14+32"
+	hide_duplicate_count = false
+	history_length = 20
+	horizontal_padding = 8
+	icon_position = off
+	idle_threshold = 120
+	ignore_newline = no
+	line_height = 3
+	markup = full
+	monitor = 0
+	notification_height = 0
+	padding = 8
+	separator_color = frame
+	separator_height = 1
+	show_age_threshold = -1
+	show_indicators = no
+	shrink = no
+	sort = yes
+	stack_duplicates = true
+	transparency = 0
+	word_wrap = yes
+
+[shortcuts]
+	close = ctrl+space
+	close_all = ctrl+shift+space
+	history = ctrl+grave
+
+[urgency_low]
+	frame_color = "#3B7C87"
+	background = "#333333"
+	foreground = "#ffffff"
+	timeout = 3
+
+[urgency_normal]
+	frame_color = "#5B8234"
+	background = "#333333"
+	foreground = "#ffffff"
+	timeout = 6
+
+[urgency_critical]
+	frame_color = "#B7472A"
+	background = "#333333"
+	foreground = "#ffffff"
+	timeout = 0

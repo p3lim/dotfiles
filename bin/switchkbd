@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# switches between two keyboard layouts
+# usage:
+# 	switchkbd <layout> <layout>
+
+if [ $# -eq 2 ]; then
+	if [ "$(setxkbmap -query | awk '/layout/ {print $2}')" == "$1" ]; then
+		setxkbmap -layout $2
+	else
+		setxkbmap -layout $1
+	fi
+fi

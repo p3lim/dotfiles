@@ -1,0 +1,29 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"AdvancedNewFile",
+		"Autotools",
+		"BracketGuard",
+		"Dockerfile Syntax Highlighting",
+		"Git Config",
+		"GitGutter",
+		"GitSavvy",
+		"Hide Menu",
+		"Highlight Trailing Whitespace",
+		"i3 wm",
+		"Package Control",
+		"PowerShell",
+		"Sass",
+		"ShellCommand",
+		"SimpleSession",
+		"Strip Whitespace Lines",
+		"Theme - Toxin",
+		"TOML",
+		"World of Warcraft TOC file Syntax",
+		"x86 and x86_64 Assembly"
+	]
+}

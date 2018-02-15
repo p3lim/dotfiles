@@ -1,0 +1,32 @@
+#!/bin/sh
+
+unit=BAT1
+
+status(){
+	amount=$(cat /sys/class/power_supply/$unit/capacity)
+
+	icon=
+	if [[ "$(cat /sys/class/power_supply/$unit/status)" = "Discharging" ]]; then
+		if (( amount > 74 )); then
+			icon=
+		elif (( amount > 24 )); then
+			icon=
+		else
+			icon=
+		fi
+	else
+		icon=
+	fi
+
+	color=
+	if (( amount < 11 )); then
+		color="%{F#de0037}"
+	fi
+
+	echo "$color$icon%{F#fff} $amount"
+}
+
+while true; do
+	status
+	_=$(watch -n 5 -g "acpi -b | awk -F, '{print $1 $2}'")
+done
