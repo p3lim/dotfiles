@@ -1,7 +1,8 @@
 #!/usr/bin/bash
 
 user=$(whoami)
-src="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+cd "$(dirname "${BASH_SOURCE[0]}")"
 
 link(){
 	local target=$1
@@ -15,7 +16,7 @@ link(){
 		mkdir -p "$parent"
 	fi
 
-	ln -sb "$src/$target" "$path"
+	ln -sb "$target" "$path"
 }
 
 # symlinks
