@@ -8,4 +8,4 @@ fi
 [[ -f ~/.xresources ]] && xrdb -merge ~/.xresources
 [[ -f ~/.xprofile ]] && . ~/.xprofile
 
-dbus-launch --sh-syntax --exit-with-session i3
+exec i3
