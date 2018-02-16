@@ -2,8 +2,10 @@
 
 # create executable file
 touchx(){
-	touch "$1"
-	chmod +x "$1"
+	for file; do
+		touch "$file"
+		chmod +x "$file"
+	done
 }
 
 # simple calculator
