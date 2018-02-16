@@ -5,3 +5,8 @@ Name=popup-top
 
 [NotificationBubble]
 Queue=popup-top
+MinWidth=1
+
+[NotificationText]
+Alignment=Center
+VerticalAlignment=Bottom
