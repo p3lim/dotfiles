@@ -1,0 +1,7 @@
+[Action]
+Name=notification-low
+
+[Notification]
+
+[NotificationBubble]
+BorderColour=#555

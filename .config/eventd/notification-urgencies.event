@@ -1,0 +1,9 @@
+[Event notification  low]
+IfData=urgency;
+IfDataMatches=urgency,==,byte 0;
+Actions=notification-low;
+
+[Event notification  critical]
+IfData=urgency;
+IfDataMatches=urgency,==,byte 2;
+Actions=notification-critical;

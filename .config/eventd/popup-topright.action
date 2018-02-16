@@ -1,0 +1,25 @@
+[Action]
+Name=popup-topright
+
+[Notification]
+Text=${title}${message/^/\n}
+
+[NotificationBubble]
+Padding=8
+Radius=0
+Border=1
+BorderColour=#CCCCCC
+BorderBlur=0
+Colour=#333333
+
+[NotificationText]
+Font=ProggyCleanTTSZ 16px
+Colour=#FFF
+
+[NotificationImage]
+Height=25
+Anchor=Center
+
+[NotificationIcon]
+Placement=Foreground
+Height=25

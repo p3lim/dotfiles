@@ -180,3 +180,6 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # file explorer
 bindsym $mod+e exec --no-startup-id $HOME/bin/filebrowser
+
+# dismiss eventd
+bindsym Control+space exec --no-startup-id eventdctl nd dismiss oldest
