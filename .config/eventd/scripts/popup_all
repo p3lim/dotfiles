@@ -1,0 +1,34 @@
+#!/bin/bash
+
+cd `dirname "${BASH_SOURCE[0]}"`
+
+source ./markup
+source ./popup
+
+source ./popup_clock
+source ./popup_battery
+source ./popup_network
+source ./popup_volume
+source ./popup_keyboard
+source ./popup_updates
+
+ALL_UUID=`uuidgen`
+
+# the updates popup tends to take time to load,
+# let the user know we're about to show
+popup "..." topleft $ALL_UUID
+
+status=()
+status+=("$(status_clock)")
+status+=("$(status_battery)")
+status+=("$(status_network)")
+status+=("$(status_volume)")
+status+=("$(status_keyboard)")
+status+=("$(status_updates)")
+
+# clear out empty indices
+for i in "${!status[@]}"; do
+	[[ -z "${status[$i]}" ]] && unset status[$i]
+done
+
+popup "`printf "%s\n" "${status[@]//[0-9A-F][0-9A-F][0-9A-F]/777}"`" topleft $ALL_UUID

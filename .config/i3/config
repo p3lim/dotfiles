@@ -175,11 +175,10 @@ bindsym $mod+slash exec --no-startup-id sh $HOME/bin/screenshot s
 # keyboard layout switching
 bindsym $mod+k exec --no-startup-id $HOME/bin/switchkbd us no
 
-# polybar
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-
 # file explorer
 bindsym $mod+e exec --no-startup-id $HOME/bin/filebrowser
 
-# dismiss eventd
+# eventd
+bindsym $mod+q exec --no-startup-id $HOME/.config/eventd/scripts/popup_all
 bindsym Control+space exec --no-startup-id eventdctl nd dismiss oldest
+exec_always --no-startup-id $HOME/.config/eventd/scripts/daemon

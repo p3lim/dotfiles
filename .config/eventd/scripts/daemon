@@ -1,0 +1,23 @@
+#!/bin/bash
+
+cd `dirname "${BASH_SOURCE[0]}"`
+
+source ./markup
+source ./popup
+
+source ./popup_battery
+# source ./popup_keyboard
+source ./popup_network
+source ./popup_updates
+source ./popup_volume
+
+watch_battery &
+watch_volume &
+watch_updates &
+watch_network &
+
+# kill the script if it's already running
+kill $(pgrep -f 'python3 ./i3ws') 2>/dev/null
+python3 ./i3ws &
+
+wait # will never happen

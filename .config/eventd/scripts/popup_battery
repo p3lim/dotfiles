@@ -1,0 +1,83 @@
+#!/bin/bash
+
+BATTERY_ID=BAT1
+BATTERY_PATH=/sys/class/power_supply/"$BATTERY_ID"
+
+BATTERY_ICON_CHARGING=
+BATTERY_ICON_HIGH=
+BATTERY_ICON_MEDIUM=
+BATTERY_ICON_LOW=
+
+BATTERY_WARN_LEVEL=100
+
+BATTERY_COLOR_WARN=DE0037
+BATTERY_COLOR_CHARGE=FF0
+
+BATTERY_UUID=`uuidgen`
+
+status_battery(){
+	capacity="${1:-`cat "$BATTERY_PATH"/capacity`}"
+	status="${2:-`cat "$BATTERY_PATH"/status`}"
+
+	if [[ "$status" = "Discharging" ]]; then
+		if ((capacity >= 75)); then
+			icon=$BATTERY_ICON_HIGH
+		elif ((capacity >= 25)); then
+			icon=$BATTERY_ICON_MEDIUM
+		else
+			icon=$BATTERY_ICON_LOW
+		fi
+
+		if ((capacity <= BATTERY_WARN_LEVEL)); then
+			color=$BATTERY_COLOR_WARNING
+		fi
+	else
+		icon=$BATTERY_ICON_CHARGING
+		color=$BATTERY_COLOR_CHARGE
+	fi
+
+	markup $icon $capacity% $color
+}
+
+watch_battery_shared(){
+	local capacity=$(cat "$BATTERY_PATH"/capacity)
+	local status=$(cat "$BATTERY_PATH"/status)
+
+	[[ -z "$battery_last_status" ]] && battery_last_status="$status"
+	[[ -z "$battery_last_capacity" ]] && battery_last_charge="$capacity"
+
+	if [[ "$status" = "$battery_last_status" ]]; then
+		return
+	fi
+
+	echo "$status"
+	if [[ "$status" = "Discharging" && "$capacity" -le "$BATTERY_WARN_LEVEL" ]]; then
+		if [[ "$capacity" = "$battery_last_capacity" ]]; then
+			return
+		fi
+
+		urgency='2'
+	else
+		return
+	fi
+
+	popup "`status_battery $capacity $status`" topright $BATTERY_UUID "$urgency"
+
+	battery_last_status=$status
+	battery_last_capacity=$capacity
+	unset urgency
+}
+
+watch_battery(){
+	# TODO: improve, this is barely working, I might be hardware-limited
+	while read -r _; do
+		watch_battery_shared
+	done < <(acpi_listen) &
+
+	# acpi only outputs on charging state change
+	# we'll have to do trickle checks for capacity
+	while true; do
+		watch_battery_shared
+		sleep 10
+	done
+}
