@@ -9,9 +9,6 @@ xset s 300 0
 # prevent screensaver during fullscreen
 noscr &
 
-# notify wifi changes
-wifinotify &
-
 # auto-mount USB drives
 udiskie -2naT &
 
