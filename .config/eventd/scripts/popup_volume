@@ -41,8 +41,8 @@ watch_volume(){
 				fi
 			} &>/dev/null
 
-			# status="`status_volume`"
-			# popup "${status//RRR/$VOLUME_COLOR_MUTED}" topright $VOLUME_UUID
+			status="`status_volume`"
+			popup "${status//RRR/$VOLUME_COLOR_MUTED}" topright $VOLUME_UUID
 		done
 	}
 }
