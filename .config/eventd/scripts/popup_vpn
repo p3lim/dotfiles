@@ -6,22 +6,22 @@ VPN_UUID=`uuidgen`
 
 status_vpn(){
 	systemctl is-active openvpn-client@home >/dev/null
-	if (($? == 0)) && ! $connected; then
+	if (($? == 0)) && ! $vpn_connected; then
 		markup $VPN_ICON "Home" 'FF0'
-		connected=true
+		vpn_connected=true
 		return
 	else
 		pidof openconnect >/dev/null
-		if (($? == 0)) && ! $connected; then
+		if (($? == 0)) && ! $vpn_connected; then
 			markup $VPN_ICON "NTNU" 'FF0'
-			connected=true
+			vpn_connected=true
 			return
 		fi
 	fi
 
-	if $connected; then
+	if $vpn_connected; then
 		markup $VPN_ICON "Disconnected" 'F00'
-		connected=false
+		vpn_connected=false
 	fi
 }
 
