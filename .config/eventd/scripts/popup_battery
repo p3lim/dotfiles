@@ -17,8 +17,8 @@ BATTERY_COLOR_CHARGE=EB4
 BATTERY_UUID=`uuidgen`
 
 status_battery(){
-	capacity="${1:-`cat "$BATTERY_PATH"/capacity`}"
-	status="${2:-`cat "$BATTERY_PATH"/status`}"
+	local capacity="${1:-`cat "$BATTERY_PATH"/capacity`}"
+	local status="${2:-`cat "$BATTERY_PATH"/status`}"
 
 	if [[ "$status" = "Discharging" ]]; then
 		if ((capacity >= 75)); then
@@ -40,34 +40,23 @@ status_battery(){
 	markup $icon $capacity% $color
 }
 
+update_battery(){
+	local status="`status_battery $1 $2`"
+	popup "${status//RRR/$BATTERY_COLOR_WARN}" topright $BATTERY_UUID "$3"
+}
+
 watch_battery_shared(){
 	local capacity=$(cat "$BATTERY_PATH"/capacity)
 	local status=$(cat "$BATTERY_PATH"/status)
 
-	[[ -z "$battery_last_status" ]] && battery_last_status="$status"
-	[[ -z "$battery_last_capacity" ]] && battery_last_charge="$capacity"
-
-	if [[ "$status" = "$battery_last_status" ]]; then
-		return
+	if [[ "$capacity" -le "$BATTERY_WARN_LEVEL" && "$status" = "Discharging" && "$capacity" != "$battery_last_capacity" ]]; then
+		update_battery $capacity $status 2
+	elif [[ "$status" != "$battery_last_status" ]]; then
+		update_battery $capacity $status
 	fi
 
-	echo "$status"
-	if [[ "$status" = "Discharging" && "$capacity" -le "$BATTERY_WARN_LEVEL" ]]; then
-		if [[ "$capacity" = "$battery_last_capacity" ]]; then
-			return
-		fi
-
-		urgency='2'
-	else
-		return
-	fi
-
-	str="`status_battery $capacity $status`"
-	popup "${str//RRR/$BATTERY_COLOR_WARN}" topright $BATTERY_UUID "$urgency"
-
-	battery_last_status=$status
-	battery_last_capacity=$capacity
-	unset urgency
+	battery_last_status="$status"
+	battery_last_capacity="$capacity"
 }
 
 watch_battery(){
