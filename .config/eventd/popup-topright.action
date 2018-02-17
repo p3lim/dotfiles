@@ -2,6 +2,3 @@
 Name=popup-topright
 
 [Notification]
-
-[NotificationBubble]
-Queue=popup-topright

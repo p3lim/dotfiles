@@ -4,4 +4,4 @@ Name=notification-low
 [Notification]
 
 [NotificationBubble]
-BorderColour=#555
+Queue=popup-topright
