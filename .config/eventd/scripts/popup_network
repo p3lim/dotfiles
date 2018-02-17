@@ -3,6 +3,11 @@
 NETWORK_ICON_ETHER=''
 NETWORK_ICON_WLAN=''
 
+NETWORK_COLOR_URGENT='RRR'
+NETWORK_COLOR_CONNECTED='7E4'
+NETWORK_COLOR_CONNECTING='EB4'
+NETWORK_COLOR_DISCONNECTED='E44'
+
 NETWORK_UUID=`uuidgen`
 
 status_network(){
@@ -32,7 +37,7 @@ status_network(){
 	for iface in "${!ether[@]}"; do
 		state="${ether[$iface]}"
 		if [[ "$state" = "routable" ]]; then
-			markup $NETWORK_ICON_ETHER "" '0F0'
+			markup $NETWORK_ICON_ETHER "" $NETWORK_COLOR_CONNECTED
 			return
 		fi
 	done
@@ -41,15 +46,15 @@ status_network(){
 		state="${wlan[$iface]}"
 		if [[ "$state" = "routable" ]]; then
 			ssid=`wpa_cli -i $iface status | awk -F= '/^ssid=/ {print $2}'`
-			markup $NETWORK_ICON_WLAN "$ssid" '0F0'
+			markup $NETWORK_ICON_WLAN "$ssid" $NETWORK_COLOR_CONNECTED
 			return
 		elif [[ "$state" = "carrier" ]]; then
-			markup $NETWORK_ICON_WLAN "" 'FF0'
+			markup $NETWORK_ICON_WLAN "" $NETWORK_COLOR_CONNECTING
 			return
 		fi
 	done
 
-	markup $NETWORK_ICON_ETHER "" 'F00'
+	markup $NETWORK_ICON_ETHER "" $NETWORK_COLOR_URGENT
 
 	unset wlan ether
 }
@@ -59,7 +64,7 @@ watch_network(){
 	journalctl -fu systemd-networkd | while read -r event; do
 		status=`status_network`
 		if [[ -n "$status" && "$status" != "$network_last_status" ]]; then
-			popup "`status_network`" topright $NETWORK_UUID
+			popup "${status//RRR/$NETWORK_COLOR_DISCONNECTED}" topright $NETWORK_UUID
 			network_last_status=$status
 		fi
 	done

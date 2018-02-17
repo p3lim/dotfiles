@@ -13,6 +13,7 @@ source ./popup_volume
 source ./popup_keyboard
 source ./popup_updates
 
+URGENT_COLOR=E44
 ALL_UUID=`uuidgen`
 
 # the updates popup tends to take time to load,
@@ -33,4 +34,8 @@ for i in "${!status[@]}"; do
 	[[ -z "${status[$i]}" ]] && unset status[$i]
 done
 
-popup "`printf "%s\n" "${status[@]//[0-9A-F][0-9A-F][0-9A-F]/777}"`" topleft $ALL_UUID
+str="`printf "%s\n" "${status[@]}"`"
+str="${str//[0-9A-F][0-9A-F][0-9A-F]/777}"
+str="${str//RRR/$URGENT_COLOR}"
+
+popup "$str" topleft $ALL_UUID

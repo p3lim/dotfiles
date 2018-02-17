@@ -10,8 +10,9 @@ BATTERY_ICON_LOW=
 
 BATTERY_WARN_LEVEL=100
 
-BATTERY_COLOR_WARN=DE0037
-BATTERY_COLOR_CHARGE=FF0
+BATTERY_COLOR_URGENT=RRR
+BATTERY_COLOR_WARN=E44
+BATTERY_COLOR_CHARGE=EB4
 
 BATTERY_UUID=`uuidgen`
 
@@ -29,7 +30,7 @@ status_battery(){
 		fi
 
 		if ((capacity <= BATTERY_WARN_LEVEL)); then
-			color=$BATTERY_COLOR_WARNING
+			color=$BATTERY_COLOR_URGENT
 		fi
 	else
 		icon=$BATTERY_ICON_CHARGING
@@ -61,7 +62,8 @@ watch_battery_shared(){
 		return
 	fi
 
-	popup "`status_battery $capacity $status`" topright $BATTERY_UUID "$urgency"
+	str="`status_battery $capacity $status`"
+	popup "${str//RRR/$BATTERY_COLOR_WARN}" topright $BATTERY_UUID "$urgency"
 
 	battery_last_status=$status
 	battery_last_capacity=$capacity

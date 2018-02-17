@@ -3,6 +3,10 @@
 VOLUME_ICON_SPEAKER=
 VOLUME_ICON_HEADPHONE=
 
+VOLUME_COLOR_URGENT='RRR'
+VOLUME_COLOR_ACTIVE='7E4'
+VOLUME_COLOR_MUTED='E44'
+
 VOLUME_UUID=`uuidgen`
 
 status_volume(){
@@ -11,9 +15,9 @@ status_volume(){
 	while read -r line; do
 		case $line in
 			state:\ RUNNING)
-				color='0F0' ;;
+				color=$VOLUME_COLOR_ACTIVE ;;
 			muted:\ yes)
-				color='F00' ;;
+				color=$VOLUME_COLOR_URGENT ;;
 			active\ port:\ *headphone*)
 				icon=$VOLUME_ICON_HEADPHONE ;;
 			active\ port:*)
@@ -37,7 +41,8 @@ watch_volume(){
 				fi
 			} &>/dev/null
 
-			popup "`status_volume`" topright $VOLUME_UUID
+			# status="`status_volume`"
+			# popup "${status//RRR/$VOLUME_COLOR_MUTED}" topright $VOLUME_UUID
 		done
 	}
 }

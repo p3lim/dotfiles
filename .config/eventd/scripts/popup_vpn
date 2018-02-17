@@ -2,25 +2,29 @@
 
 VPN_ICON=''
 
+VPN_COLOR_URGENT='RRR'
+VPN_COLOR_CONNECTED='7E4'
+VPN_COLOR_DISCONNECTED='E44'
+
 VPN_UUID=`uuidgen`
 
 status_vpn(){
 	systemctl is-active openvpn-client@home >/dev/null
 	if (($? == 0)) && ! $vpn_connected; then
-		markup $VPN_ICON "Home" 'FF0'
+		markup $VPN_ICON "Home" $VPN_COLOR_CONNECTED
 		vpn_connected=true
 		return
 	else
 		pidof openconnect >/dev/null
 		if (($? == 0)) && ! $vpn_connected; then
-			markup $VPN_ICON "NTNU" 'FF0'
+			markup $VPN_ICON "NTNU" $VPN_COLOR_CONNECTED
 			vpn_connected=true
 			return
 		fi
 	fi
 
 	if $vpn_connected; then
-		markup $VPN_ICON "Disconnected" 'F00'
+		markup $VPN_ICON "Disconnected" $VPN_COLOR_URGENT
 		vpn_connected=false
 	fi
 }
@@ -28,6 +32,6 @@ status_vpn(){
 watch_vpn(){
 	journalctl -fu systemd-networkd | while read -r event; do
 		status=`status_vpn`
-		[[ -n "$status" ]] && popup "$status" topright $VPN_UUID
+		[[ -n "$status" ]] && popup "${status//RRR/$VPN_COLOR_DISCONNECTED}" topright $VPN_UUID
 	done
 }
