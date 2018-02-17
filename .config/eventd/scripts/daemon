@@ -10,11 +10,13 @@ source ./popup_battery
 source ./popup_network
 source ./popup_updates
 source ./popup_volume
+source ./popup_vpn
 
 watch_battery &
 watch_volume &
 watch_updates &
 watch_network &
+watch_vpn &
 
 # kill the script if it's already running
 kill $(pgrep -f 'python3 ./i3ws') 2>/dev/null

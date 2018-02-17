@@ -55,6 +55,7 @@ status_network(){
 }
 
 watch_network(){
+	# this is a bit spammy, might want to filter it
 	journalctl -fu systemd-networkd | while read -r event; do
 		popup "`status_network`" topright $NETWORK_UUID
 	done

@@ -8,6 +8,7 @@ source ./popup
 source ./popup_clock
 source ./popup_battery
 source ./popup_network
+source ./popup_vpn
 source ./popup_volume
 source ./popup_keyboard
 source ./popup_updates
@@ -22,6 +23,7 @@ status=()
 status+=("$(status_clock)")
 status+=("$(status_battery)")
 status+=("$(status_network)")
+status+=("$(status_vpn)")
 status+=("$(status_volume)")
 status+=("$(status_keyboard)")
 status+=("$(status_updates)")

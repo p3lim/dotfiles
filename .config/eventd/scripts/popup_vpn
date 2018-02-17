@@ -1,0 +1,33 @@
+#!/bin/bash
+
+VPN_ICON=''
+
+VPN_UUID=`uuidgen`
+
+status_vpn(){
+	systemctl is-active openvpn-client@home >/dev/null
+	if (($? == 0)) && ! $connected; then
+		markup $VPN_ICON "Home" 'FF0'
+		connected=true
+		return
+	else
+		pidof openconnect >/dev/null
+		if (($? == 0)) && ! $connected; then
+			markup $VPN_ICON "NTNU" 'FF0'
+			connected=true
+			return
+		fi
+	fi
+
+	if $connected; then
+		markup $VPN_ICON "Disconnected" 'F00'
+		connected=false
+	fi
+}
+
+watch_vpn(){
+	journalctl -fu systemd-networkd | while read -r event; do
+		status=`status_vpn`
+		[[ -n "$status" ]] && popup "$status" topright $VPN_UUID
+	done
+}
