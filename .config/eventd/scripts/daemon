@@ -12,6 +12,10 @@ source ./popup_updates
 source ./popup_volume
 source ./popup_vpn
 
+# kill existing processes
+ps ax | grep "$(pwd)/daemon" | egrep -v "$$" | awk '{print $1}' | xargs -t kill >/dev/null 2>&1
+
+# start processes
 watch_battery &
 watch_volume &
 watch_updates &
