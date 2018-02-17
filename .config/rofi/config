@@ -4,7 +4,7 @@ rofi.theme: gray
 ! positioning seems broken in themes, set it here
 rofi.location: 1
 rofi.xoffset: 14
-rofi.yoffset: 32
+rofi.yoffset: 14
 
 ! lines set in theme can't be overwritten
 rofi.lines: 20
