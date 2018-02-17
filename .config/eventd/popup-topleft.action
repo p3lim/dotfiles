@@ -7,6 +7,3 @@ Name=popup-topleft
 Queue=popup-topleft
 Timeout=5000
 MinWidth=1
-
-[NotificationText]
-Alignment=Center
