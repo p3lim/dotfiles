@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CLOCK_ICON=
+CLOCK_ICON=''
 CLOCK_FORMAT='%H:%M'
 
 status_clock(){
