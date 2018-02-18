@@ -1,14 +1,14 @@
-[Event notification  low]
+[Event notification * low]
 IfData=urgency;
 IfDataMatches=urgency,==,byte 0;
 Actions=notification-low;
 
-[Event notification  normal]
+[Event notification * normal]
 IfData=urgency;
 IfDataMatches=urgency,==,byte 1;
 Actions=notification-normal;
 
-[Event notification  critical]
+[Event notification * critical]
 IfData=urgency;
 IfDataMatches=urgency,==,byte 2;
 Actions=notification-critical;
