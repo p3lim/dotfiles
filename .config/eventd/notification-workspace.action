@@ -1,10 +1,11 @@
 [Action]
-Name=popup-top
+Name=notification-workspace
 
 [Notification]
 
 [NotificationBubble]
-Queue=popup-top
+Queue=top
+Timeout=1000
 MinWidth=1
 
 [NotificationText]

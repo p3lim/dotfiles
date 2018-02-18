@@ -7,7 +7,7 @@ from subprocess import Popen
 uuid = str(uuid4())
 
 def notify(self, event):
-	Popen(('eventc popup top %s -d title="%s"' % (uuid, event.current.name)).split())
+	Popen(('eventc notification workspace %s -d title="%s"' % (uuid, event.current.name)).split())
 
 i3 = i3ipc.Connection()
 i3.on('workspace::focus', notify)

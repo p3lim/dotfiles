@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # attempt to clear queue first
-eventdctl nd dismiss all popup-topleft
+eventdctl nd dismiss all topleft
 if (($? != 50)); then
 	# queue was not empty, user tried to remove the popup, so bail
 	exit 0
@@ -40,11 +40,11 @@ str="`printf "%s\n" "${status[@]}"`"
 str="${str//#[0-9A-F][0-9A-F][0-9A-F]/#777}"
 str="${str//#RRR/#$URGENT_COLOR}"
 
-eventc popup topleft -d title="'${str//\'/\\\"}'"
+eventc notification info -d title="'${str//\'/\\\"}'"
 
 # a separate popup for updates, as it takes time to fetch data
 update_status="$(status_updates)"
 if [[ -n "$update_status" ]]; then
 	str="${update_status//#RRR/#$URGENT_COLOR}"
-	eventc popup topleft -d title="'${str//\'/\\\"}'"
+	eventc notification info -d title="'${str//\'/\\\"}'"
 fi

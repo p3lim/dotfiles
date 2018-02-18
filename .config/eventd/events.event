@@ -12,3 +12,9 @@ Actions=notification-normal;
 IfData=urgency;
 IfDataMatches=urgency,==,byte 2;
 Actions=notification-critical;
+
+[Event notification info]
+Actions=notification-info;
+
+[Event notification workspace]
+Actions=notification-workspace;

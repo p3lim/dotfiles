@@ -1,9 +1,9 @@
 [Action]
-Name=popup-topleft
+Name=notification-info
 
 [Notification]
 
 [NotificationBubble]
-Queue=popup-topleft
+Queue=topleft
 Timeout=0
 MinWidth=1
