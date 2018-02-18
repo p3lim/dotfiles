@@ -2,12 +2,11 @@
 
 popup(){
 	# $1 = text
-	# $2 = position (defaults to 'topright')
-	# $3 = uuid (optional)
-	# $4 = urgency (0-2, optional)
+	# $2 = uuid (optional)
+	# $3 = urgency (0-2, optional)
 	if [[ -n "$4" ]]; then
-		eventc notification generic $3 -d title="'${1//\'/\\\"}'" -d urgency="byte $4"
+		eventc notification generic $2 -d title="'${1//\'/\\\"}'" -d urgency="byte $3"
 	else
-		eventc popup ${2:-topright} $3 -d title="'${1//\'/\\\"}'"
+		eventc notification generic $2 -d title="'${1//\'/\\\"}'"
 	fi
 }

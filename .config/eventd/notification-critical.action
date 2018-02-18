@@ -4,6 +4,5 @@ Name=notification-critical
 [Notification]
 
 [NotificationBubble]
-Queue=popup-topright
 Timeout=0
 BorderColour=#B7472A

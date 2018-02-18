@@ -3,6 +3,3 @@ Actions=popup-top;
 
 [Event popup topleft]
 Actions=popup-topleft;
-
-[Event popup topright]
-Actions=popup-topright;

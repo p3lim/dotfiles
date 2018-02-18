@@ -2,6 +2,3 @@
 Name=notification-normal
 
 [Notification]
-
-[NotificationBubble]
-Queue=popup-topright
