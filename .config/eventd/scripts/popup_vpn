@@ -27,6 +27,6 @@ status_vpn(){
 watch_vpn(){
 	journalctl -fu systemd-networkd | while read -r event; do
 		status=`status_vpn`
-		[[ -n "$status" ]] && popup "${status//RRR/$VPN_COLOR_DISCONNECTED}" topright $VPN_UUID
+		[[ -n "$status" ]] && popup "${status//#RRR/#$VPN_COLOR_DISCONNECTED}" topright $VPN_UUID
 	done
 }

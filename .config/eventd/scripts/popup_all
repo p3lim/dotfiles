@@ -36,13 +36,13 @@ for i in "${!status[@]}"; do
 done
 
 str="`printf "%s\n" "${status[@]}"`"
-str="${str//[0-9A-F][0-9A-F][0-9A-F]/777}"
-str="${str//RRR/$URGENT_COLOR}"
+str="${str//#[0-9A-F][0-9A-F][0-9A-F]/#777}"
+str="${str//#RRR/#$URGENT_COLOR}"
 
 popup "$str" topleft
 
 # a separate popup for updates, as it takes time to fetch data
 update_status="$(status_updates)"
 if [[ -n "$update_status" ]]; then
-	popup "${update_status//RRR/$URGENT_COLOR}" topleft
+	popup "${update_status//#RRR/#$URGENT_COLOR}" topleft
 fi

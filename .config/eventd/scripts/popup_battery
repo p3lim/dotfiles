@@ -42,7 +42,7 @@ status_battery(){
 
 update_battery(){
 	local status="`status_battery $1 $2`"
-	popup "${status//RRR/$BATTERY_COLOR_WARN}" topright $BATTERY_UUID "$3"
+	popup "${status//#RRR/#$BATTERY_COLOR_WARN}" topright $BATTERY_UUID "$3"
 }
 
 watch_battery_shared(){

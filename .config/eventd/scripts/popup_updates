@@ -21,7 +21,7 @@ watch_updates(){
 			if [[ -n "$status" && "$last_update_status" != "$status" ]]; then
 				last_update_status=$status
 
-				popup "${status//RRR/7AF}"
+				popup "${status//#RRR/#7AF}"
 			fi
 		fi
 

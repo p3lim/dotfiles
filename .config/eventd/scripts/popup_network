@@ -64,7 +64,7 @@ watch_network(){
 	journalctl -fu systemd-networkd | while read -r event; do
 		status=`status_network`
 		if [[ -n "$status" && "$status" != "$network_last_status" ]]; then
-			popup "${status//RRR/$NETWORK_COLOR_DISCONNECTED}" topright $NETWORK_UUID
+			popup "${status//#RRR/#$NETWORK_COLOR_DISCONNECTED}" topright $NETWORK_UUID
 			network_last_status=$status
 		fi
 	done
