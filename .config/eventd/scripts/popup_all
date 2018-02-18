@@ -21,11 +21,6 @@ source ./popup_keyboard
 source ./popup_updates
 
 URGENT_COLOR=E44
-ALL_UUID=`uuidgen`
-
-# the updates popup tends to take time to load,
-# let the user know we're about to show
-popup "..." topleft $ALL_UUID
 
 status=()
 status+=("$(status_clock)")
@@ -34,7 +29,6 @@ status+=("$(status_network)")
 status+=("$(status_vpn)")
 status+=("$(status_volume)")
 status+=("$(status_keyboard)")
-status+=("$(status_updates)")
 
 # clear out empty indices
 for i in "${!status[@]}"; do
@@ -45,4 +39,10 @@ str="`printf "%s\n" "${status[@]}"`"
 str="${str//[0-9A-F][0-9A-F][0-9A-F]/777}"
 str="${str//RRR/$URGENT_COLOR}"
 
-popup "$str" topleft $ALL_UUID
+popup "$str" topleft
+
+# a separate popup for updates, as it takes time to fetch data
+update_status="$(status_updates)"
+if [[ -n "$update_status" ]]; then
+	popup "${update_status//RRR/$URGENT_COLOR}" topleft
+fi
