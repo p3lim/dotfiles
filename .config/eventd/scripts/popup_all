@@ -10,7 +10,6 @@ fi
 cd `dirname "${BASH_SOURCE[0]}"`
 
 source ./markup
-source ./popup
 
 source ./popup_clock
 source ./popup_date
@@ -41,10 +40,11 @@ str="`printf "%s\n" "${status[@]}"`"
 str="${str//#[0-9A-F][0-9A-F][0-9A-F]/#777}"
 str="${str//#RRR/#$URGENT_COLOR}"
 
-popup "$str" topleft
+eventc popup topleft -d title="'${str//\'/\\\"}'"
 
 # a separate popup for updates, as it takes time to fetch data
 update_status="$(status_updates)"
 if [[ -n "$update_status" ]]; then
-	popup "${update_status//#RRR/#$URGENT_COLOR}" topleft
+	str="${update_status//#RRR/#$URGENT_COLOR}"
+	eventc popup topleft -d title="'${str//\'/\\\"}'"
 fi
