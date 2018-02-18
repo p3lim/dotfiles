@@ -13,6 +13,7 @@ source ./markup
 source ./popup
 
 source ./popup_clock
+source ./popup_date
 source ./popup_battery
 source ./popup_network
 source ./popup_vpn
@@ -24,6 +25,7 @@ URGENT_COLOR=E44
 
 status=()
 status+=("$(status_clock)")
+status+=("$(status_date)")
 status+=("$(status_battery)")
 status+=("$(status_network)")
 status+=("$(status_vpn)")
