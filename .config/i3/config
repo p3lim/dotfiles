@@ -180,5 +180,5 @@ bindsym $mod+e exec --no-startup-id $HOME/bin/filebrowser
 
 # eventd
 bindsym $mod+q exec --no-startup-id $HOME/.config/eventd/scripts/popup_all
-bindsym Control+space exec --no-startup-id eventdctl nd dismiss oldest
+bindsym Control+space exec --no-startup-id eventdctl nd dismiss oldest default
 exec_always --no-startup-id $HOME/.config/eventd/scripts/daemon
