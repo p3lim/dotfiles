@@ -1,23 +1,23 @@
 #!/bin/sh
 
 print(){
-	echo -e "\t\e[36m$1: \e[0m$2"
+	printf "\t\e[36m%6s  " "$1"
+	printf "\e[0m%s\n" "$2"
+#	echo -e "\t\e[36m$1: \e[0m$2"
 }
 
 # get distro info
-. /etc/os-release
+source /etc/os-release
+
+DMI_PATH='/sys/devices/virtual/dmi/id'
 
 echo
-echo
 
-# /sys/devices/virtual/dmi/id/product_family
-# /sys/devices/virtual/dmi/id/board_name
-print 'host' 'Thinkpad 13'
+print 'host' "$(cat $DMI_PATH/product_family) ($(cat $DMI_PATH/product_name))"
 print 'distro' "$NAME"
-print 'kernel' "$(uname -smr)"
+print 'kernel' "$(uname -sr)"
 print 'shell' "bash ${BASH_VERSION/-*}"
 
 echo
 echo -e "\t\e[30m▓▓ \e[31m▓▓ \e[32m▓▓ \e[33m▓▓ \e[34m▓▓ \e[35m▓▓ \e[36m▓▓ \e[37m▓▓ \e[0m"
-echo
 echo
