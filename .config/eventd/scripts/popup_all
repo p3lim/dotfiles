@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# attempt to clear queue first
+eventdctl nd dismiss all popup-topleft
+if (($? != 50)); then
+	# queue was not empty, user tried to remove the popup, so bail
+	exit 0
+fi
+
 cd `dirname "${BASH_SOURCE[0]}"`
 
 source ./markup

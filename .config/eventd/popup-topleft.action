@@ -5,5 +5,5 @@ Name=popup-topleft
 
 [NotificationBubble]
 Queue=popup-topleft
-Timeout=5000
+Timeout=0
 MinWidth=1
