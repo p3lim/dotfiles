@@ -37,7 +37,7 @@ status_network(){
 	for iface in "${!ether[@]}"; do
 		state="${ether[$iface]}"
 		if [[ "$state" = "routable" ]]; then
-			markup $NETWORK_ICON_ETHER "" $NETWORK_COLOR_CONNECTED
+			markup $NETWORK_ICON_ETHER 'LAN' $NETWORK_COLOR_CONNECTED
 			return
 		fi
 	done
@@ -49,12 +49,12 @@ status_network(){
 			markup $NETWORK_ICON_WLAN "$ssid" $NETWORK_COLOR_CONNECTED
 			return
 		elif [[ "$state" = "carrier" ]]; then
-			markup $NETWORK_ICON_WLAN "" $NETWORK_COLOR_CONNECTING
+			markup $NETWORK_ICON_WLAN 'Connecting' $NETWORK_COLOR_CONNECTING
 			return
 		fi
 	done
 
-	markup $NETWORK_ICON_ETHER "" $NETWORK_COLOR_URGENT
+	markup $NETWORK_ICON_ETHER 'Disconnected' $NETWORK_COLOR_URGENT
 
 	unset wlan ether
 }
