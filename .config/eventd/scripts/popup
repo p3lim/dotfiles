@@ -4,9 +4,10 @@ popup(){
 	# $1 = text
 	# $2 = uuid (optional)
 	# $3 = urgency (0-2, optional)
-	if [[ -n "$4" ]]; then
-		eventc notification generic $2 -d title="'${1//\'/\\\"}'" -d urgency="byte $3"
+	# $4 = event name (optional, defaults to 'generic')
+	if [[ -n "$3" ]]; then
+		eventc notification ${4:-generic} $2 -d title="'${1//\'/\\\"}'" -d urgency="byte $3"
 	else
-		eventc notification generic $2 -d title="'${1//\'/\\\"}'"
+		eventc notification ${4:-generic} $2 -d title="'${1//\'/\\\"}'"
 	fi
 }
