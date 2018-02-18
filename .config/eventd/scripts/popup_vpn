@@ -9,24 +9,19 @@ VPN_COLOR_DISCONNECTED='E44'
 VPN_UUID=`uuidgen`
 
 status_vpn(){
-	systemctl is-active openvpn-client@home >/dev/null
-	if (($? == 0)) && ! $vpn_connected; then
+	systemctl is-active openvpn-client@home >/dev/null 2>&1
+	if (($? == 0)); then
 		markup $VPN_ICON "Home" $VPN_COLOR_CONNECTED
-		vpn_connected=true
 		return
-	else
-		pidof openconnect >/dev/null
-		if (($? == 0)) && ! $vpn_connected; then
-			markup $VPN_ICON "NTNU" $VPN_COLOR_CONNECTED
-			vpn_connected=true
-			return
-		fi
 	fi
 
-	if $vpn_connected; then
-		markup $VPN_ICON "Disconnected" $VPN_COLOR_URGENT
-		vpn_connected=false
+	pidof openconnect >/dev/null 2>&1
+	if (($? == 0)); then
+		markup $VPN_ICON "NTNU" $VPN_COLOR_CONNECTED
+		return
 	fi
+
+	markup $VPN_ICON "Disconnected" $VPN_COLOR_URGENT
 }
 
 watch_vpn(){
