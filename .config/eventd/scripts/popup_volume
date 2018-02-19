@@ -41,8 +41,11 @@ watch_volume(){
 				fi
 			} &>/dev/null
 
-			status="`status_volume`"
-			popup "${status//#RRR/#$VOLUME_COLOR_MUTED}" $VOLUME_UUID
+			status=`status_volume`
+			if [[ -n "$status" && "$status" != "$volume_last_status" ]]; then
+				popup "${status//#RRR/#$VOLUME_COLOR_MUTED}" $VOLUME_UUID
+				volume_last_status=$status
+			fi
 		done
 	}
 }
