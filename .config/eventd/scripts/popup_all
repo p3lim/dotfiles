@@ -3,7 +3,8 @@
 # attempt to clear queue first
 eventdctl nd dismiss all topleft
 if (($? != 50)); then
-	# queue was not empty, user tried to remove the popup, so bail
+	# queue was not empty, user tried to remove the popup, kill the remaining process then bail
+	kill $(pgrep -f $(dirname $0))
 	exit 0
 fi
 
