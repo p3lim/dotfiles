@@ -22,6 +22,9 @@ opt=
 
 # pull settings
 source ~/.config/env/screenshot
+# host='http://upload.example.com' - the target upload path
+# auth='username:password'
+# src='http://images.example.com' - the public path for the image
 
 # set path
 path='/tmp/scrot'

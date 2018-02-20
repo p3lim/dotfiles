@@ -6,7 +6,7 @@
 # - rofi
 # - feh (for viewing images)
 # - gnome-mpv (for viewing videos)
-# - firefox (for viewing pdfs)
+# - zathura (for viewing pdfs)
 # - ranger (for browsing directories)
 
 selection=$(find -L $HOME -path $HOME/.cache -prune -o -name '*' | sed 's@'"$HOME"'@~@g' | \
