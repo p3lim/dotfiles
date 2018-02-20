@@ -149,16 +149,6 @@ bindsym $mod+Shift+9 move container to workspace $w9
 # start a terminal
 bindsym $mod+Return exec termite
 
-# desktop launches with Rofi
-bindsym $mod+d exec rofi -show drun
-
-# power menu with Rofi
-bindsym $mod+Shift+x exec --no-startup-id sh $HOME/bin/powerctl
-# wifi menu with Rofi
-bindsym XF86Explorer exec --no-startup-id python $HOME/bin/wifictl
-# monitor menu with Rofi
-bindsym XF86LaunchA exec --no-startup-id python $HOME/bin/monitorctl
-
 # media
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
@@ -175,8 +165,12 @@ bindsym $mod+slash exec --no-startup-id sh $HOME/bin/screenshot s
 # keyboard layout switching
 bindsym $mod+k exec --no-startup-id $HOME/bin/switchkbd us no
 
-# file explorer
-bindsym $mod+e exec --no-startup-id $HOME/bin/filebrowser
+# rofi
+bindsym $mod+d exec rofi -show drun
+bindsym $mod+Shift+x exec --no-startup-id $HOME/.config/rofi/scripts/power
+bindsym XF86Explorer exec --no-startup-id python3 $HOME/.config/rofi/scripts/wifi
+bindsym XF86LaunchA exec --no-startup-id python3 $HOME/.config/rofi/scripts/monitor
+bindsym $mod+e exec --no-startup-id $HOME/.config/rofi/scripts/files
 
 # eventd
 bindsym $mod+q exec --no-startup-id $HOME/.config/eventd/scripts/popup_all
