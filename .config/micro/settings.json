@@ -2,6 +2,7 @@
     "autoclose": true,
     "autoindent": true,
     "autosave": false,
+    "basename": false,
     "colorcolumn": 0,
     "colorscheme": "solarized-tc",
     "cursorline": true,
@@ -15,6 +16,8 @@
     "keepautoindent": false,
     "keymenu": false,
     "linter": false,
+    "literate": true,
+    "matchbrace": false,
     "mouse": true,
     "pluginchannels": [
         "https://raw.githubusercontent.com/micro-editor/plugin-channel/master/channel.json"
