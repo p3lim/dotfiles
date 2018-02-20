@@ -11,7 +11,7 @@ Configuration files and various scripts for my laptop.
 - [Rofi](https://github.com/DaveDavenport/rofi#readme) - system interactivity through [custom scripts](https://github.com/p3lim/dotfiles/tree/master/.config/rofi/scripts)
 - [Termite](https://github.com/thestinger/termite#readme) - terminal emulator of choice, very modern and easy to configure
 - [Bash](https://github.com/gitGNU/gnu_bash#readme) - the shell, I like to keep things simple
-- [Sublime Text](https://www.sublimetext.com/) - with a lot of plugins, it's where I spend way too much time
+- [Sublime Text](https://www.sublimetext.com/) - with a lot of [plugins](https://github.com/p3lim/dotfiles/blob/master/.config/sublime-text-3/Packages/User/Package%20Control.sublime-settings#L6), it's where I spend way too much time
 
 ### Fonts
 
