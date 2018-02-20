@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # very basic file/directory "browser"
 #
@@ -9,9 +9,15 @@
 # - zathura (for viewing pdfs)
 # - ranger (for browsing directories)
 
-selection=$(find -L $HOME -path $HOME/.cache -prune -o -name '*' | sed 's@'"$HOME"'@~@g' | \
-	grep -v .git | grep -v cache | grep -v Cache | grep -v chromium | grep -v .nuget | grep -v .mozilla | \
-	rofi -dmenu -i -p 'Open: ')
+# this is disgusting, wish the expressions supported regex properly (! -path '*.(cache|git)/*')
+selection=$(rofi -dmenu -i -p 'Open: ' < <(find -L "$HOME" \
+	! -path '*.cache/*' \
+	! -path '*.git/*' \
+	! -path '*.nuget/*' \
+	! -path '*.mozilla/*' \
+	! -path '*.local/*' \
+	! -path '*.gem/*' \
+	| sed 's@'"$HOME"'@~@g'))
 
 selection="${selection/\~/$HOME}"
 if [[ -f "$selection" ]]; then

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # switches between two keyboard layouts
 # usage:
@@ -6,8 +6,8 @@
 
 if [ $# -eq 2 ]; then
 	if [ "$(setxkbmap -query | awk '/layout/ {print $2}')" == "$1" ]; then
-		setxkbmap -layout $2
+		setxkbmap -layout "$2"
 	else
-		setxkbmap -layout $1
+		setxkbmap -layout "$1"
 	fi
 fi

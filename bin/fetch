@@ -1,9 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 print(){
-	printf "\t\e[36m%6s  " "$1"
-	printf "\e[0m%s\n" "$2"
-#	echo -e "\t\e[36m$1: \e[0m$2"
+	printf "\\t\\e[36m%6s  " "$1"
+	printf "\\e[0m%s\\n" "$2"
 }
 
 # get distro info
@@ -19,5 +18,5 @@ print 'kernel' "$(uname -sr)"
 print 'shell' "bash ${BASH_VERSION/-*}"
 
 echo
-echo -e "\t\e[30m▓▓ \e[31m▓▓ \e[32m▓▓ \e[33m▓▓ \e[34m▓▓ \e[35m▓▓ \e[36m▓▓ \e[37m▓▓ \e[0m"
+echo -e "\\t\\e[30m▓▓ \\e[31m▓▓ \\e[32m▓▓ \\e[33m▓▓ \\e[34m▓▓ \\e[35m▓▓ \\e[36m▓▓ \\e[37m▓▓ \\e[0m"
 echo

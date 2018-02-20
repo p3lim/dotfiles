@@ -3,8 +3,8 @@
 UPDATES_ICON=''
 
 status_updates(){
-	pac=`checkupdates | wc -l`
-	aur=`cower -u | wc -l`
+	pac=$(checkupdates | wc -l)
+	aur=$(cower -u | wc -l)
 
 	if (((pac + aur) > 0)); then
 		markup $UPDATES_ICON "$pac/$aur" 'RRR'
@@ -15,9 +15,8 @@ watch_updates(){
 	while true; do
 		sleep 600
 
-		nc -zw1 8.8.8.8 443 >/dev/null 2>&1
-		if (($? == 0)); then
-			status="`status_updates`"
+		if nc -zw1 8.8.8.8 443 >/dev/null 2>&1; then
+			status="$(status_updates)"
 			if [[ -n "$status" && "$last_update_status" != "$status" ]]; then
 				last_update_status=$status
 

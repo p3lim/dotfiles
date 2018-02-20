@@ -4,11 +4,11 @@
 eventdctl nd dismiss all topleft
 if (($? != 50)); then
 	# queue was not empty, user tried to remove the popup, kill the remaining process then bail
-	kill $(pgrep -f $(dirname $0))
+	pkill -f "$(which "$0")"
 	exit 0
 fi
 
-cd `dirname "${BASH_SOURCE[0]}"`
+cd "$(dirname "${BASH_SOURCE[0]}")" || exit
 
 source ./markup
 source ./popup
@@ -35,10 +35,10 @@ status+=("$(status_keyboard)")
 
 # clear out empty indices
 for i in "${!status[@]}"; do
-	[[ -z "${status[$i]}" ]] && unset status[$i]
+	[[ -z "${status[$i]}" ]] && unset status["$i"]
 done
 
-str="`printf "%s\n" "${status[@]}"`"
+str="$(printf "%s\\n" "${status[@]}")"
 str="${str//#[0-9A-F][0-9A-F][0-9A-F]/#777}"
 str="${str//#RRR/#$URGENT_COLOR}"
 

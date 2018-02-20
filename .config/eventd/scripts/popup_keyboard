@@ -3,8 +3,8 @@
 KEYBOARD_ICON=''
 
 status_keyboard(){
-	layout=`setxkbmap -query | awk '/layout/ {print $2}'`
-	markup $KEYBOARD_ICON $layout
+	layout=$(setxkbmap -query | awk '/layout/ {print $2}')
+	markup $KEYBOARD_ICON "$layout"
 }
 
 watch_keyboard(){

@@ -8,13 +8,13 @@ NETWORK_COLOR_CONNECTED='7E4'
 NETWORK_COLOR_CONNECTING='EB4'
 NETWORK_COLOR_DISCONNECTED='E44'
 
-NETWORK_UUID=`uuidgen`
+NETWORK_UUID=$(uuidgen)
 
 status_network(){
 	declare -A wlan
 	declare -A ether
 
-	cd /sys/class/net
+	cd /sys/class/net || exit
 	for iface in *; do
 		while IFS=': ' read -r key value; do
 			case $key in
@@ -31,7 +31,7 @@ status_network(){
 						esac
 					fi ;;
 			esac
-		done < <(networkctl status $iface)
+		done < <(networkctl status "$iface")
 	done
 
 	for iface in "${!ether[@]}"; do
@@ -45,7 +45,7 @@ status_network(){
 	for iface in "${!wlan[@]}"; do
 		state="${wlan[$iface]}"
 		if [[ "$state" = "routable" ]]; then
-			ssid=`wpa_cli -i $iface status | awk -F= '/^ssid=/ {print $2}'`
+			ssid=$(wpa_cli -i "$iface" status | awk -F= '/^ssid=/ {print $2}')
 			markup $NETWORK_ICON_WLAN "$ssid" $NETWORK_COLOR_CONNECTED
 			return
 		elif [[ "$state" = "carrier" ]]; then
@@ -61,10 +61,10 @@ status_network(){
 
 watch_network(){
 	# this is a bit spammy, might want to filter it
-	journalctl -fu systemd-networkd | while read -r event; do
-		status=`status_network`
+	journalctl -fu systemd-networkd | while read -r _; do
+		status=$(status_network)
 		if [[ -n "$status" && "$status" != "$network_last_status" ]]; then
-			popup "${status//#RRR/#$NETWORK_COLOR_DISCONNECTED}" $NETWORK_UUID
+			popup "${status//#RRR/#$NETWORK_COLOR_DISCONNECTED}" "$NETWORK_UUID"
 			network_last_status=$status
 		fi
 	done

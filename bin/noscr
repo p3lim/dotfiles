@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # script that prevents the screensaver from activating during
 # a full-screen application
@@ -18,41 +18,28 @@
 # - sed (get rid of)
 # - wc (get rid of)
 
-DEBUG=0
-
-log(){
-	if [ $DEBUG -eq 1 ]; then
-		echo "["`date +%H:%M:%S`"]" $@
-	fi
-}
-
 sleep_time(){
 	# get the set sleep time from xset
-	echo "$(xset q | awk '/timeout:/ {print $2}')"
+	xset q | awk '/timeout:/ {print $2}'
 }
 
 num_displays(){
 	# gets number of displays connected
-	echo "$(xrandr | grep -sw connected | wc -l)"
+	xrandr | grep -swc connected
 }
 
 check_fullscreen(){
 	# checks if a fullscreen app is running on any connected displays
-	for ((i=0;i<$(num_displays);i++))
-	do
+	for ((i=0; i<$(num_displays); i++)); do
 		# get active window id
 		active_id=$(DISPLAY=:${i} xprop -root _NET_CLIENT_LIST_STACKING | sed 's/.*\, //')
-		if [ -n $active_id ]; then
+		if [[ -n "$active_id" ]]; then
 			# check if that window is fullscreen
-			is_fullscreen=$(DISPLAY=:${i} xprop -id $active_id | grep -c _NET_WM_STATE_FULLSCREEN)
+			is_fullscreen=$(DISPLAY=:${i} xprop -id "$active_id" | grep -c _NET_WM_STATE_FULLSCREEN)
 			if [ "$is_fullscreen" -ge 1 ]; then
-				log "- found fullscreen app"
 				# check if the window is one of the whitelisted apps
-				app_running
-				var=$?
-				if [ $var -eq 1 ]; then
+				if app_running; then
 					# reset the screensaver
-					log "- reset!"
 					xset s reset
 				fi
 			fi
@@ -62,39 +49,36 @@ check_fullscreen(){
 
 run_check(){
 	# checks if the active window is the given app running
-	active_title=$(xprop -id $active_id | grep "WM_CLASS(STRING)")
+	active_title=$(xprop -id "$active_id" | grep "WM_CLASS(STRING)")
 	if [[ "${active_title,,}" = *$1* ]]; then
-		if [ "$(pidof -s $1)" ]; then
-			log "- found $1!"
-			return 1
+		if [ "$(pidof -s "$1")" ]; then
+			return 0
 		fi
 	fi
+
+	return 1
 }
 
 app_running(){
 	# verifies active fullscreen app
 
 	# check firefox (html5)
-	run_check firefox
-	if [ $? -eq 1 ]; then
-		return 1
+	if run_check firefox; then
+		return 0
 	fi
 
 	# check mpv
-	run_check mpv
-	if [ $? -eq 1 ]; then
-		return 1
+	if run_check mpv; then
+		return 0
 	fi
 
-	return 0
+	return 1
 }
 
 while true
 do
-	log "checking..."
 	check_fullscreen
-	log "sleep for $(($(sleep_time)-1))"
 	sleep $(($(sleep_time)-1))
 done
 
-exit 0
+exit 1

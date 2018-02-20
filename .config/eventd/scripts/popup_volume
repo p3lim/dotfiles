@@ -7,10 +7,10 @@ VOLUME_COLOR_URGENT='RRR'
 VOLUME_COLOR_ACTIVE='7E4'
 VOLUME_COLOR_MUTED='E44'
 
-VOLUME_UUID=`uuidgen`
+VOLUME_UUID=$(uuidgen)
 
 status_volume(){
-	sinkName=`pacmd stat | awk -F': ' '/^Default sink name: / {print $2}'`
+	sinkName=$(pacmd stat | awk -F': ' '/^Default sink name: / {print $2}')
 
 	while read -r line; do
 		case $line in
@@ -27,7 +27,7 @@ status_volume(){
 		esac
 	done < <(pacmd list-sinks | sed '/'"$sinkName"'/,/index:/!d')
 
-	markup $icon $volume $color
+	markup $icon "$volume" $color
 }
 
 watch_volume(){
@@ -35,15 +35,15 @@ watch_volume(){
 		while true; do
 			{
 				read -r event || break
-				if ! grep "on card\|sink" <<< "$event"; then
+				if ! grep "on card\\|sink" <<< "$event"; then
 					# avoid double events
 					continue
 				fi
 			} &>/dev/null
 
-			status=`status_volume`
+			status=$(status_volume)
 			if [[ -n "$status" && "$status" != "$volume_last_status" ]]; then
-				popup "${status//#RRR/#$VOLUME_COLOR_MUTED}" $VOLUME_UUID
+				popup "${status//#RRR/#$VOLUME_COLOR_MUTED}" "$VOLUME_UUID"
 				volume_last_status=$status
 			fi
 		done
