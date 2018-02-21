@@ -13,7 +13,7 @@ source ./popup_volume
 source ./popup_vpn
 
 # kill existing processes
-pgrep "$(which "$0")" | grep -E "$$" | xargs -t kill >/dev/null 2>&1
+pgrep -f "$(which "$0")" | grep -vE "$$" | xargs -t kill >/dev/null 2>&1
 
 # start processes
 watch_battery &
