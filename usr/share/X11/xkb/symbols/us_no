@@ -1,0 +1,15 @@
+// custom layout for adding ÆØÅ on the US keyboard, under AltGr
+
+default partial alphanumeric_keys
+xkb_symbols "basic" {
+    // use US as a base
+    include "us(basic)"
+
+    name[Group1]="US/NO";
+
+    key <AC11> { [ apostrophe,  quotedbl,  ae,     AE       ] };
+    key <AC10> { [ semicolon,   colon,     oslash, Ooblique ] };
+    key <AD11> { [ bracketleft, braceleft, aring,  Aring    ] };
+
+    include "level3(ralt_switch)"
+};

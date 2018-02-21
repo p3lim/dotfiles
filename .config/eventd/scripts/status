@@ -19,7 +19,6 @@ source ./popup_battery
 source ./popup_network
 source ./popup_vpn
 source ./popup_volume
-source ./popup_keyboard
 source ./popup_updates
 
 URGENT_COLOR=E44
@@ -31,7 +30,6 @@ status+=("$(status_battery)")
 status+=("$(status_network)")
 status+=("$(status_vpn)")
 status+=("$(status_volume)")
-status+=("$(status_keyboard)")
 
 # clear out empty indices
 for i in "${!status[@]}"; do

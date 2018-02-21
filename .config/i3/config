@@ -162,9 +162,6 @@ bindsym $mod+comma exec --no-startup-id sh $HOME/bin/screenshot
 bindsym $mod+period exec --no-startup-id sh $HOME/bin/screenshot w
 bindsym $mod+slash exec --no-startup-id sh $HOME/bin/screenshot s
 
-# keyboard layout switching
-bindsym $mod+k exec --no-startup-id $HOME/bin/switchkbd us no
-
 # rofi
 bindsym $mod+d exec rofi -show drun
 bindsym $mod+Shift+x exec --no-startup-id $HOME/.config/rofi/scripts/power
