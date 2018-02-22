@@ -99,9 +99,6 @@ bindsym $mod+x [urgent=oldest] focus
 # change focus between tiling/floating windows
 bindsym $mod+space focus mode_toggle
 
-# focus the parent container
-bindsym $mod+a focus parent
-
 # fullscreen
 bindsym $mod+f fullscreen toggle
 
