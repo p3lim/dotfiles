@@ -20,6 +20,10 @@ bspc rule -a Spotify desktop='^5'
 bspc rule -a Subl3 desktop='^2'
 bspc rule -a Enpass-Desktop desktop='^9'
 
+bspc rule -a MEGAsync state=floating
+bspc rule -a Galculator state=floating
+bspc rule -a ranger_dialog state=floating
+
 # settings
 bspc config click_to_focus any
 bspc config gapless_monocle true

@@ -41,5 +41,5 @@ if [[ -f "$selection" ]]; then
 elif [[ -d "$selection" ]]; then
 	# show directory with ranger
 	# custom title so we can force floating mode in i3
-	i3-sensible-terminal -t 'ranger-popout' -e "ranger $selection"
+	termite --class=ranger_dialog -e "ranger $selection"
 fi
