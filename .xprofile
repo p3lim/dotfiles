@@ -6,6 +6,12 @@ xss-lock -n ~/bin/dim -- slock &
 # blank screen after 5 minutes
 xset s 300 0
 
+# set root cursor
+xsetroot -cursor_name left_ptr
+
+# our notification daemon
+$HOME/.config/eventd/scripts/daemon &
+
 # prevent screensaver during fullscreen
 noscr &
 
