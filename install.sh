@@ -29,6 +29,7 @@ link '.xresources'
 
 link 'bin'
 link '.config/bash'
+link '.config/bspwm'
 link '.config/compton'
 link '.config/eventd'
 link '.config/git'
@@ -38,6 +39,7 @@ link '.config/rofi'
 link '.config/termite'
 link '.config/gtk-3.0/gtk.css'
 link '.config/sublime-text-3/Packages/C++'
+link '.config/sxhkd'
 
 for file in "$src/.config/sublime-text-3/Packages/User"/*; do
 	link ".config/sublime-text-3/Packages/User/$(basename $file)"

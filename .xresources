@@ -35,11 +35,14 @@
 *.color7: #ffffff
 *.color15: #ffffff
 
-
 ! i3
 i3wm.active: #cccccc
 i3wm.inactive: #555555
 i3wm.urgent: #ee829f
+
+! bspwm
+bspwm.active: #cccccc
+bspwm.inactive: #555555
 
 ! polybar
 polybar.warning: #de0037

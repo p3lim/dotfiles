@@ -1,0 +1,76 @@
+#
+# wm bindings
+#
+
+# toggle fullscreen
+super + f
+	bspc node -t ~fullscreen
+
+# toggle floating
+super + shift + space
+	bspc node -t ~floating
+
+# toggle focus floating
+super + space
+	bspc node -f next.local
+
+# focus/move
+super + {_,shift + }{Left,Right,Up,Down}
+	bspc node -{f,s} {west,east,north,south}
+
+# focus desktop/move node to desktop
+super + {_,shift + }{1-9}
+	bspc {desktop -f,node -d} '^{1-9}'
+
+# close node
+super + shift + q
+	bspc node -c
+
+# reload sxhkd config and notification daemon
+super + shift + c
+	pkill -SIGUSR1 -x sxhkd && \
+	$HOME/.config/eventd/scripts/daemon
+
+#
+# software bindings
+#
+
+# start a terminal
+super + Return
+	termite
+
+# audio output
+XF86Audio{RaiseVolume,LowerVolume,Mute}
+	pactl set-sink-{volume,volume,mute} @DEFAULT_SINK@ {+5%,-5%,toggle}
+
+# audio input
+XF86AudioMicMute
+	pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+# brightness
+XF86MonBrightness{Up,Down}
+	xbacklight {+,-}10
+
+# screenshots
+super + {comma,period,slash}
+	screenshot {_,w,s}
+
+# rofi
+super + d
+	rofi -show drun
+
+super + e
+	$HOME/.config/rofi/scripts/files
+
+super + shift + x
+	$HOME/.config/rofi/scripts/power
+
+XF86{Explorer,LaunchA}
+	python3 $HOME/.config/rofi/scripts/{wifi,monitor}
+
+# eventd
+super + q
+	$HOME/.config/eventd/scripts/status
+
+control + space
+	eventdctl nd dismiss oldest default

@@ -1,0 +1,27 @@
+#!/bin/bash
+
+colors=$(xrdb -query)
+
+# workspaces
+bspc monitor -d {1..9}
+
+# gap and border
+bspc config window_gap 10
+bspc config border_width 1
+
+# colors
+bspc config normal_border_color "$(awk '/bspwm.inactive/ {print $2}' <<< "$colors")"
+bspc config focused_border_color "$(awk '/bspwm.active/ {print $2}' <<< "$colors")"
+
+# application rules
+bspc rule -a Firefox desktop='^1'
+bspc rule -a Discord desktop='^5'
+bspc rule -a Spotify desktop='^5'
+bspc rule -a Subl3 desktop='^2'
+bspc rule -a Enpass-Desktop desktop='^9'
+
+# settings
+bspc config click_to_focus any
+bspc config gapless_monocle true
+bspc config borderless_monocle true
+bspc config single_monocle true
