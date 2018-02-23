@@ -9,6 +9,9 @@ xset s 300 0
 # set root cursor
 xsetroot -cursor_name left_ptr
 
+# make sure eventd has a display
+eventdctl nd switch xcb $DISPLAY
+
 # our notification daemon
 $HOME/.config/eventd/scripts/daemon &
 
