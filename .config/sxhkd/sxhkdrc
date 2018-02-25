@@ -31,6 +31,13 @@ super + shift + c
 	systemctl --user reload sxhkd && \
 	$HOME/.config/eventd/scripts/daemon
 
+# preselect
+super + {_,shift + }h
+	bspc node -p ~{east,west}
+
+super + {_,shift + }v
+	bspc node -p ~{south,north}
+
 #
 # software bindings
 #

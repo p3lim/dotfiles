@@ -43,6 +43,7 @@ i3wm.urgent: #ee829f
 ! bspwm
 bspwm.active: #cccccc
 bspwm.inactive: #555555
+bspwm.preselect: #ffffff
 
 ! polybar
 polybar.warning: #de0037
