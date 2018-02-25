@@ -49,6 +49,10 @@ for file in "$src/.config/sublime-text-3/Packages/Default"/*; do
 	link ".config/sublime-text-3/Packages/Default/$(basename $file)"
 done
 
+for file in "$src/.config/systemd/user"/*; do
+	link ".config/systemd/user/$(basename $file)"
+done
+
 link '.mozilla/firefox/profiles.ini'
 link '.mozilla/firefox/custom/chrome'
 
@@ -65,6 +69,9 @@ sudo systemctl enable wpa_supplicant@wlan0.service
 
 # enable cronie
 sudo systemctl enable cronie.service --now
+
+# enable eventd-watcher
+systemctl --user enable eventd-watcher.service --now
 
 # speed up compilation by building in tmpfs
 sudo sed -i '/BUILDDIR/s/^#//g' /etc/makepkg.conf

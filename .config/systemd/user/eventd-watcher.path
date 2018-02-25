@@ -1,0 +1,5 @@
+[Path]
+PathModified=%h/.config/eventd
+
+[Install]
+WantedBy=default.target

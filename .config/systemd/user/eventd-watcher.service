@@ -1,0 +1,9 @@
+[Unit]
+Description=eventd restarter
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/systemctl --user reload eventd.service
+
+[Install]
+Also=eventd-watcher.path
