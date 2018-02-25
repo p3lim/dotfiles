@@ -42,6 +42,10 @@ super + {_,shift + }h
 super + {_,shift + }v
 	bspc node -p ~{south,north}
 
+# resize
+super + alt + {Left,Right,Up,Down}
+	python3 $HOME/.config/bspwm/scripts/resize {left,right,up,down}
+
 #
 # software bindings
 #

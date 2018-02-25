@@ -1,0 +1,61 @@
+#!/usr/bin/python3
+
+# smart resize for focused bspwm node, depending on closest corner
+#
+# usage:
+# 	resize up|down|left|right [amount]
+
+from sys import argv, exit
+from json import loads
+from subprocess import getoutput, call
+
+# get key from input
+if len(argv) < 2:
+	exit(-1)
+key = argv[1].lower()
+
+# (optionally) get amount from input
+if len(argv) == 3:
+	amount = int(argv[2])
+else:
+	amount = 20
+
+try:
+	node = loads(getoutput('bspc query -T -n focused'))
+	ws = loads(getoutput('bspc query -T -d'))
+except:
+	exit(-1)
+
+# get workspace size
+width = ws['root']['rectangle']['width'] + ws['root']['rectangle']['x']
+height = ws['root']['rectangle']['height'] + ws['root']['rectangle']['y']
+
+# get distance from left edge of workspace to the center of the node
+x = node['rectangle']['x'] + (node['rectangle']['width'] / 2)
+
+# get distance from top edge of workspace to the center of the node
+y = node['rectangle']['y'] + (node['rectangle']['height'] / 2)
+
+# run commands based on closest edge
+if key == 'up':
+	if y > height / 2:
+		call('bspc node -z top 0 -{}'.format(amount).split())
+	else:
+		call('bspc node -z bottom 0 -{}'.format(amount).split())
+elif key == 'down':
+	if y > height / 2:
+		call('bspc node -z top 0 {}'.format(amount).split())
+	else:
+		call('bspc node -z bottom 0 {}'.format(amount).split())
+elif key == 'left':
+	if x > width / 2:
+		call('bspc node -z left -{} 0'.format(amount).split())
+	else:
+		call('bspc node -z right -{} 0'.format(amount).split())
+elif key == 'right':
+	if x > width / 2:
+		call('bspc node -z left {} 0'.format(amount).split())
+	else:
+		call('bspc node -z right {} 0'.format(amount).split())
+else:
+	exit(-1)
