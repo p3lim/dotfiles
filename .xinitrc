@@ -10,5 +10,4 @@ fi
 
 #exec i3
 
-sxhkd &
 exec bspwm

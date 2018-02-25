@@ -28,7 +28,7 @@ super + shift + q
 
 # reload sxhkd config and notification daemon
 super + shift + c
-	pkill -SIGUSR1 -x sxhkd && \
+	systemctl --user reload sxhkd && \
 	$HOME/.config/eventd/scripts/daemon
 
 #

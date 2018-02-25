@@ -73,6 +73,9 @@ sudo systemctl enable cronie.service --now
 # enable eventd-watcher
 systemctl --user enable eventd-watcher.service --now
 
+# enable sxhkd
+systemctl --user enable sxhkd.service --now
+
 # speed up compilation by building in tmpfs
 sudo sed -i '/BUILDDIR/s/^#//g' /etc/makepkg.conf
 
