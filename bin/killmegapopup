@@ -7,4 +7,6 @@ until xdotool search --onlyvisible --class '^megasync$'; do
 	sleep .2
 done
 
+sleep .5
+
 xdotool search --class '^megasync$' windowactivate --sync %1 key Escape
