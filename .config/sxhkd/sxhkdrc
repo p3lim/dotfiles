@@ -14,9 +14,13 @@ super + shift + space
 super + space
 	bspc node -f next.local
 
-# focus/move
-super + {_,shift + }{Left,Right,Up,Down}
-	bspc node -{f,s} {west,east,north,south}
+# focus
+super + {Left,Right,Up,Down}
+	bspc node -f {west,east,north,south}
+
+# move
+super + shift + {Left,Right,Up,Down}
+	$HOME/.config/bspwm/scripts/move {west,east,north,south}
 
 # focus desktop/move node to desktop
 super + {_,shift + }{1-9}

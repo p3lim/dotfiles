@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# smart move for nodes, depending if floating or not
+
+if bspc query -N -n focused.floating >/dev/null; then
+	# TODO: try to get rid of this array
+	declare -A offset
+	offset['west']='-20 0'
+	offset['east']='20 0'
+	offset['north']='0 -20'
+	offset['south']='0 20'
+
+	bspc node -v ${offset[$1]}
+else
+	bspc node -s $1
+fi
