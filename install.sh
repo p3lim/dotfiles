@@ -16,7 +16,7 @@ link(){
 		mkdir -p "$parent"
 	fi
 
-	ln -sb "$target" "$path"
+	ln -sb "$(pwd)/$target" "$path"
 }
 
 # symlinks
@@ -41,15 +41,15 @@ link '.config/gtk-3.0/gtk.css'
 link '.config/sublime-text-3/Packages/C++'
 link '.config/sxhkd'
 
-for file in "$src/.config/sublime-text-3/Packages/User"/*; do
+for file in .config/sublime-text-3/Packages/User/*; do
 	link ".config/sublime-text-3/Packages/User/$(basename $file)"
 done
 
-for file in "$src/.config/sublime-text-3/Packages/Default"/*; do
+for file in .config/sublime-text-3/Packages/Default/*; do
 	link ".config/sublime-text-3/Packages/Default/$(basename $file)"
 done
 
-for file in "$src/.config/systemd/user"/*; do
+for file in .config/systemd/user/*; do
 	link ".config/systemd/user/$(basename $file)"
 done
 
