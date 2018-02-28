@@ -29,6 +29,7 @@ alias df='df -h'
 alias py=python3
 alias m=micro
 alias posh=pwsh
+alias xclip='xclip -selection clipboard'
 
 if [[ -z "$SUDO_USER" ]]; then
 	alias subl=subl3
