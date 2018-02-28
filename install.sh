@@ -70,11 +70,12 @@ sudo systemctl enable wpa_supplicant@wlan0.service
 # enable cronie
 sudo systemctl enable cronie.service --now
 
-# enable eventd-watcher
-systemctl --user enable eventd-watcher.service --now
-
 # enable sxhkd
 systemctl --user enable sxhkd.service --now
+
+# enable eventd
+systemctl --user enable eventd
+systemctl --user start eventd-control.socket eventd.socket
 
 # speed up compilation by building in tmpfs
 sudo sed -i '/BUILDDIR/s/^#//g' /etc/makepkg.conf
