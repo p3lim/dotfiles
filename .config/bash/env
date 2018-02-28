@@ -7,6 +7,9 @@ export BROWSER=firefox
 export TERM=xterm-256color
 export TZ=Europe/Oslo
 
+# history
+export HISTCONTROL=ignoreboth:erasedups
+
 # scripts
 export PATH=$HOME/bin:$PATH
 
