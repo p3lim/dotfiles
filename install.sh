@@ -56,6 +56,9 @@ done
 link '.mozilla/firefox/profiles.ini'
 link '.mozilla/firefox/custom/chrome'
 
+# install a sublime plugin
+git clone https://github.com/p3lim/sublime-paste $HOME/.config/sublime-text-3/Packages/Paste
+
 # copy config files
 sudo cp --parents -rb etc /
 sudo cp --parents -rb usr /
