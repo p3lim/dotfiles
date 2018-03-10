@@ -8,6 +8,5 @@ fi
 [[ -f ~/.xresources ]] && xrdb -merge ~/.xresources
 [[ -f ~/.xprofile ]] && . ~/.xprofile
 
-#exec i3
-
-exec bspwm
+exec i3
+#exec bspwm
