@@ -52,7 +52,7 @@ if (( RET == 0 )); then
 	fi
 
 	if which xclip >/dev/null 2>&1; then
-		echo "$response" | xclip -selection clipboard
+		xclip -selection clipboard <<< "$response"
 	fi
 else
 	if which notify-send >/dev/null 2>&1; then
