@@ -9,66 +9,54 @@
 # requires:
 # - maim
 # - curl
-# - xclip
-# - libnotify (for notify-send)
 # - xdotool
-# - awk
-# - tr
+# - (optional) xclip
+# - (optional) libnotify (for notify-send)
 
 # parse options from user, s=selection, w=window
-opt=
-[[ "$1" == "s" ]] && opt='-s'
-[[ "$1" == "w" ]] && opt="-i $(xdotool getactivewindow)"
+opt='-u '
+case "$1" in
+	s) opt+=' -s' ;;
+	w) opt+=" -i $(xdotool getactivewindow)" ;;
+esac
 
-# pull settings
+# host to upload to
+# host='http://example.com'
 source ~/.config/env/screenshot
-# host='http://upload.example.com' - the target upload path
-# auth='username:password'
-# src='http://images.example.com' - the public path for the image
 
-# set path
-path='/tmp/scrot'
-if ! [[ -d "$path" ]]; then
-	mkdir -p $path
-fi
+# path to store images temporarily
+path='/tmp/screenshots'
 
-# set file name
-file=$(date +%Y-%m-%d-%H%M%S.png)
+# create the temporary directory to store images if it doesn't exist
+mkdir -p "$path"
 
-# take screenshot
-if ! maim "$opt" -u "$path/$file"; then
+# create path + filename based on date
+filepath="$path/$(date +"%Y-%m-%d-%H%M%S").png"
+
+# take the screenshot
+if ! maim $opt "$filepath"; then
 	# bail out if maim was unsuccessful
 	exit 1
 fi
 
-# attempt upload
-upload(){
-	# generate a random 4-character filename
-	randfile="$(date +%s | sha1sum | awk '{print substr($0,0,4)}').png"
+# upload the file
+response="$(curl -sF "c=@$filepath" "$host")"
 
-	# copy
-	cp "$path/$file" "$path/$randfile"
+# cleanup
+rm "$filepath"
 
-	# upload the file
-	status=$(curl -u "$auth" -T "$path/$randfile" "$host" -i | awk '/^HTTP\// {print $2}')
-
-	# cleanup
-	rm "$path/$randfile"
-
-	# evaluate the status
-	if [[ "$status" = *201* ]]; then
-		# file was successfully uploaded
-		echo "$src/$randfile" | xclip -selection c
-		notify-send 'Upload successful!' "$src/$randfile"
-		exit 0
-	elif [[ "$status" = *204* ]]; then
-		# file already exists with that name, try again
-		upload
-	else
-		# some error, let the user know
-		notify-send -u critical 'Upload failed!' "Error: $(echo "${status/100/}" | tr -d '[:space:]')"
-		exit 2
+if (( $? == 0 )); then
+	if which notify-send >/dev/null 2>&1; then
+		notify-send 'Upload successful!' "$response"
 	fi
-}
 
-upload
+	if which xclip >/dev/null 2>&1; then
+		echo "$response" | xclip -selection clipboard
+	fi
+else
+	if which notify-send >/dev/null 2>&1; then
+		notify-send -u critical 'Upload failed!' "$response"
+	fi
+
+	exit 2
+fi
