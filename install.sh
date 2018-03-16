@@ -80,6 +80,9 @@ systemctl --user enable sxhkd.service --now
 systemctl --user enable eventd
 systemctl --user start eventd-control.socket eventd.socket
 
+# enable slock
+sudo systemctl enable slock@$user.service
+
 # speed up compilation by building in tmpfs
 sudo sed -i '/BUILDDIR/s/^#//g' /etc/makepkg.conf
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # locker
-xss-lock -n ~/bin/dim -- slock &
+xss-lock --ignore-sleep -n ~/bin/dim -- slock &
 
 # blank screen after 5 minutes
 xset s 300 0
