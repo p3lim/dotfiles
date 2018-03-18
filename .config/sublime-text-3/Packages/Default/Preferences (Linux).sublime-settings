@@ -1,3 +1,5 @@
 {
-	"font_size": 12
+	"font_size": 12,
+	"font_face": "ProggyCleanTTSZ",
+	"update_check": false
 }

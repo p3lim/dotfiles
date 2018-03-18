@@ -6,8 +6,6 @@
 	"enable_tab_scrolling": false,
 	"ensure_newline_at_eof_on_save": true,
 	"fade_fold_buttons": false,
-	"font_face": "ProggyCleanTTSZ",
-	"font_size": 12,
 	"hide_gutter_unfolded": true,
 	"hide_sidebar_heading": true,
 	"highlight_line": true,
@@ -31,7 +29,6 @@
 		"gdi"
 	],
 	"tree_animation_enabled": false,
-	"update_check": false,
 	"use_minimap_as_scrollbar": true,
 	"word_wrap": false
 }
