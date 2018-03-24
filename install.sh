@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 user=$(whoami)
 
@@ -24,6 +24,7 @@ link 'bin'
 link '.bashrc'
 link '.inputrc'
 link '.config/bash'
+link '.config/git'
 
 if ! [[ "$(uname -r)" = *Microsoft* ]]; then
 	link '.bash_profile'
@@ -34,7 +35,6 @@ if ! [[ "$(uname -r)" = *Microsoft* ]]; then
 	link '.config/bspwm'
 	link '.config/compton'
 	link '.config/eventd'
-	link '.config/git'
 	link '.config/i3'
 	link '.config/micro'
 	link '.config/rofi'
