@@ -1,7 +1,14 @@
 #!/bin/bash
 
 if [[ "$(uname -r)" = *Microsoft* ]]; then
+	# WSL
 	nano $@
 else
-	subl3 -nw $@
+	if which subl.exe >/dev/null; then
+		# native windows
+		subl.exe -nw $@
+	elif which subl3 >/dev/null; then
+		# native linux
+		subl3 -nw $@
+	fi
 fi
