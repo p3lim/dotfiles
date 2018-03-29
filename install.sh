@@ -25,6 +25,7 @@ link '.bashrc'
 link '.inputrc'
 link '.config/bash'
 link '.config/git'
+link '.config/nano'
 
 if ! [[ "$(uname -r)" = *Microsoft* ]]; then
 	link '.bash_profile'
