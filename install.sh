@@ -85,6 +85,9 @@ if ! [[ "$(uname -r)" = *Microsoft* ]]; then
 	# enable slock
 	sudo systemctl enable slock@$user.service
 
+	# enable "hybrid" hibernating
+	sudo systemctl enable suspend-to-hibernate.service
+
 	# speed up compilation by building in tmpfs
 	sudo sed -i '/BUILDDIR/s/^#//g' /etc/makepkg.conf
 fi
