@@ -20,11 +20,11 @@ if [[ "$(uname -r)" = *Microsoft* ]]; then
 	fi
 fi
 
-if which subl.exe >/dev/null; then
+if which subl.exe >/dev/null 2>&1; then
 	# native windows
 	subl.exe -nw $arg $@
 	exit $?
-elif which subl3 >/dev/null; then
+elif which subl3 >/dev/null 2>&1; then
 	# native linux
 	subl3 -nw $arg $@
 	exit $?
