@@ -1,14 +1,35 @@
 #!/bin/bash
+#
+# Script that will allow git core.editor to be dynamically chosen
+# based on the environment to allow graphical native editors for
+# linux, windows and wsl.
+#
+
+arg="$@"
+shift 1
 
 if [[ "$(uname -r)" = *Microsoft* ]]; then
 	# WSL
-	nano $@
-else
-	if which subl.exe >/dev/null; then
-		# native windows
-		subl.exe -nw $@
-	elif which subl3 >/dev/null; then
-		# native linux
-		subl3 -nw $@
+	if [[ "$arg" = /mnt/* ]]; then
+		# path is outside, we can use the graphical option if we change the path
+		arg=$(sed -e 's/^\/mnt\///' -e 's/^\///' -e 's/\//\\/g' -e 's/^./\0:/' <<< "$arg")
+	else
+		# we can't use a graphical editor, path is not accessible to the outside
+		nano $arg $@
+		exit $?
 	fi
 fi
+
+if which subl.exe >/dev/null; then
+	# native windows
+	subl.exe -nw $arg $@
+	exit $?
+elif which subl3 >/dev/null; then
+	# native linux
+	subl3 -nw $arg $@
+	exit $?
+fi
+
+# fallback editor
+nano $arg $@
+exit $?
