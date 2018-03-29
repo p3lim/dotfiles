@@ -11,7 +11,7 @@
 	# commits symbolic links as text files containing the path
 	symlinks = true
 	# use Sublime Text (in a new window) as our editor
-	editor = subl3 -nw
+	editor = giteditor
 	# highlights carriage returns in diffs
 	whitespace = cr-at-eol
 

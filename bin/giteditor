@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [[ "$(uname -r)" = *Microsoft* ]]; then
+	nano $@
+else
+	subl3 -nw $@
+fi
