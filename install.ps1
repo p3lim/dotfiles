@@ -4,7 +4,7 @@
 #
 
 if(!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]"Administrator")){
-	Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`" $PSCommandArgs" -WorkingDirectory $pwd -Verb RunAs
+	Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`" $PSCommandArgs" -WorkingDirectory $PSScriptRoot -Verb RunAs
 	Exit
 }
 
@@ -16,10 +16,12 @@ function link($src, $dest){
 	New-Item -Path $dest -ItemType SymbolicLink -Value $src
 }
 
+Push-Location $PSScriptRoot
+
 link '.config\git\config' "$HOME\.gitconfig"
 link '.config\sublime-text-3\Packages\C++' "$env:APPDATA\Sublime Text 3\Packages\C++"
 link '.mozilla\firefox\profiles.ini' "$env:APPDATA\Mozilla\Firefox\profiles.ini"
-link '.mozilla\firefox\custom\chrome' "$env:APPDATA\Mozilla\Firefox\custom\chrome"
+link '.mozilla\firefox\custom\chrome' "$env:APPDATA\Mozilla\Firefox\Profiles\custom\chrome"
 link '.minttyrc' "$env:APPDATA\wsltty\config"
 
 Get-ChildItem '.config\sublime-text-3\Packages\User' | Foreach-Object {
@@ -34,4 +36,6 @@ Get-ChildItem '.config\sublime-text-3\Packages\Default' | Foreach-Object {
 	link "$($_.FullName)" "$env:APPDATA\Sublime Text 3\Packages\Default\$($_.Name)"
 }
 
-git clone https://github.com/p3lim/sublime-paste "$env:APPDATA\Sublime Text 3\Packages\Paste"
+if(!(Test-Path "$env:APPDATA\Sublime Text 3\Packages\Paste")){
+    git clone https://github.com/p3lim/sublime-paste "$env:APPDATA\Sublime Text 3\Packages\Paste"
+}
