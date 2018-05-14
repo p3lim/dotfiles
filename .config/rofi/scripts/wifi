@@ -195,7 +195,7 @@ class wpa(object):
 			self.authenticate(entry, security[int(selected)])
 
 	def authenticate(self, entry, method):
-		if method == 'Open':
+		if method == '[Open]':
 			self.connect(entry['ssid'], [
 				'key_mgmt NONE'
 			])
