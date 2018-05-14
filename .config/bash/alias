@@ -17,6 +17,8 @@ alias -- -='cd -' # go to previous dir with "-"
 alias cd.='cd $(readlink -f .)' # go to link source with ""
 alias week='date +%V'
 alias lm='stat -c "%a %n" *' # shows permissions for files in current directory
+alias cpp='rsync -avPh'
+alias mvp='rsync -avPh --remove-source-files'
 
 # confirm before overwrite
 alias cp='cp -i'
