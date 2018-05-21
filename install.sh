@@ -77,14 +77,14 @@ if ! [[ "$(uname -r)" = *Microsoft* ]]; then
 	sudo systemctl enable cronie.service --now
 
 	# enable sxhkd
-	systemctl --user enable sxhkd.service --now
+	# systemctl --user enable sxhkd.service --now
 
 	# enable eventd
 	systemctl --user enable eventd
 	systemctl --user start eventd-control.socket eventd.socket
 
 	# enable slock
-	sudo systemctl enable slock@$user.service
+	# sudo systemctl enable slock@$user.service
 
 	# enable "hybrid" hibernating
 	sudo systemctl enable suspend-to-hibernate.service
