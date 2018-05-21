@@ -29,3 +29,5 @@ Cyan=85,219,190
 BoldCyan=85,219,190
 White=214,214,214
 BoldWhite=255,255,255
+Scrollbar=none
+ScrollMod=off
