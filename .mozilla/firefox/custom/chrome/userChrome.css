@@ -15,3 +15,8 @@
 		background-color: #363636 !important;
 	}
 }
+
+/* https://github.com/Sporif/firefox-quantum-userchromejs */
+#alltabs-button {
+	-moz-binding: url("userChrome.xml#js");
+}

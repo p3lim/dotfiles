@@ -1,0 +1,51 @@
+scrollbar {
+	-moz-appearance: none !important;
+	position: relative !important;
+	background-color: transparent;
+	pointer-events: none;
+}
+
+scrollbar thumb {
+	-moz-appearance: none !important;
+	background-color: transparent;
+	pointer-events: auto;
+}
+
+scrollbar[orient = "vertical"] {
+	-moz-margin-start: -12px;
+	min-width: 12px !important;
+}
+
+scrollbar[orient = "horizontal"] {
+	margin-top: -12px;
+	height: 12px !important;
+}
+
+scrollbar[orient = "vertical"] thumb {
+	border-right: 5px solid rgba(133, 132, 131, 1);
+	width: 12px;
+	min-height: 12px;
+	/*transition: border 0.1s ease-in;*/
+}
+
+scrollbar[orient = "horizontal"] thumb {
+	border-bottom: 5px solid rgba(133, 132, 131, 1);
+	min-width: 12px;
+	/*transition: border 0.1s ease-in;*/
+}
+
+scrollbar:hover {
+	background-color: rgba(0, 0, 0, 0.25);
+	max-width: 12px !important;
+	point-events: auto;
+}
+
+scrollbar:hover thumb {
+	border-width: 12px;
+	/*transition: border 0s linear;*/
+}
+
+scrollbar scrollbarbutton,
+scrollbar gripper {
+	display: none;
+}
