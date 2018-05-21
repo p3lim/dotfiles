@@ -1,4 +1,4 @@
 {
-	"terminal": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-	"parameters": ["-noexit"]
+	"terminal": "C:\\Users\\p3lim\\AppData\\Local\\wsltty\\bin\\mintty.exe",
+	"parameters": ["--WSL=", "--configdir='C:\\Users\\p3lim\\AppData\\Roaming\\wsltty'"]
 }
