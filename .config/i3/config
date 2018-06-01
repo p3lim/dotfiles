@@ -171,3 +171,8 @@ bindsym $mod+e exec --no-startup-id $HOME/.config/rofi/scripts/files
 # eventd
 bindsym $mod+q exec --no-startup-id $HOME/.config/eventd/scripts/status
 bindsym Control+space exec --no-startup-id eventdctl nd dismiss oldest default
+
+# "overlay" applications with fancy binds
+bindsym $mod+c [class="discord" tiling] floating toggle ; [class="discord"] sticky toggle ; [class="discord" tiling] move container to workspace $w9 ; [class="discord" floating] focus
+bindsym $mod+s [class="Spotify" tiling] floating toggle ; [class="Spotify"] sticky toggle ; [class="Spotify" tiling] move container to workspace $w9 ; [class="Spotify" floating] focus
+bindsym $mod+i [class="weechat" tiling] floating toggle ; [class="weechat"] sticky toggle ; [class="weechat" tiling] move container to workspace $w9 ; [class="weechat" floating] focus
