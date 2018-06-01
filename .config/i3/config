@@ -42,13 +42,18 @@ focus_follows_mouse no
 new_window pixel 1
 new_float pixel 1
 
-# keep titles for floating windows
+# floating size matches outer borders
+floating_minimum_size 1898 x 1058
+floating_maximum_size 1898 x 1058
 
 # assign applications to workspaces
 for_window [class="Firefox" tiling] move to workspace $w1
-for_window [class="Spotify" tiling] move to workspace $w5
-for_window [class="discord"] move to workspace $w5
 for_window [class="Subl3" tiling] move to workspace $w2
+
+# services we usually never use directly, stashed into the last workspace
+for_window [class="Spotify" tiling] move to workspace $w9
+for_window [class="discord" tiling] move to workspace $w9
+for_window [class="weechat" tiling] move to workspace $w9
 for_window [class="Enpass-Desktop"] move to workspace $w9
 
 # force floating mode on certain applications/windows
