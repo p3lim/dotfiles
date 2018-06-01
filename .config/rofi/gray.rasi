@@ -64,5 +64,6 @@ scrollbar {
 }
 
 configuration {
-	display-drun: "Start: ";
+	display-drun: "Start:";
+	display-calc: "Calc:";
 }
