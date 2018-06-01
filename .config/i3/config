@@ -46,12 +46,6 @@ new_float pixel 1
 for_window [class="Firefox" tiling] move to workspace $w1
 for_window [class="Subl3" tiling] move to workspace $w2
 
-# services we usually never use directly, stashed into the last workspace
-for_window [class="Spotify" tiling] move to workspace $w9
-for_window [class="discord" tiling] move to workspace $w9
-for_window [class="weechat" tiling] move to workspace $w9
-for_window [class="Enpass-Desktop"] move to workspace $w9
-
 # force floating mode on certain applications/windows
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
@@ -168,7 +162,23 @@ bindsym $mod+e exec --no-startup-id $HOME/.config/rofi/scripts/files
 bindsym $mod+q exec --no-startup-id $HOME/.config/eventd/scripts/status
 bindsym Control+space exec --no-startup-id eventdctl nd dismiss oldest default
 
-# "overlay" applications with fancy binds
-bindsym $mod+c [class="discord"] floating toggle ; [class="discord"] sticky toggle ; [class="discord" tiling] move container to workspace $w9 ; [class="discord" floating] focus ; [class="discord" floating] resize set 1900 1060 ; [class="discord" floating] move absolute position center ;
-bindsym $mod+s [class="Spotify"] floating toggle ; [class="Spotify"] sticky toggle ; [class="Spotify" tiling] move container to workspace $w9 ; [class="Spotify" floating] focus ; [class="Spotify" floating] resize set 1900 1060 ; [class="Spotify" floating] move absolute position center ;
-bindsym $mod+i [class="weechat"] floating toggle ; [class="weechat"] sticky toggle ; [class="weechat" tiling] move container to workspace $w9 ; [class="weechat" floating] focus ; [class="weechat" floating] resize set 1900 1060 ; [class="weechat" floating] move absolute position center ;
+# scratchpads
+for_window [class="discord"] floating enable
+for_window [class="discord"] resize set 1900 1060
+for_window [class="discord"] move scratchpad
+bindsym $mod+c [class="discord"] scratchpad show ; [class="discord"] move position center
+
+for_window [class="Spotify"] floating enable
+for_window [class="Spotify"] resize set 1900 1060
+for_window [class="Spotify"] move scratchpad
+bindsym $mod+s [class="Spotify"] scratchpad show ; [class="Spotify"] move position center
+
+for_window [class="weechat"] floating enable
+for_window [class="weechat"] resize set 1900 1060
+for_window [class="weechat"] move scratchpad
+bindsym $mod+i [class="weechat"] scratchpad show ; [class="weechat"] move position center
+
+for_window [class="Enpass-Desktop"] floating enable
+for_window [class="Enpass-Desktop"] resize set 1900 1060
+for_window [class="Enpass-Desktop"] move scratchpad
+bindsym $mod+p [class="Enpass-Desktop"] scratchpad show ; [class="Enpass-Desktop"] move position center
