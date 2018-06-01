@@ -162,7 +162,7 @@ bindsym $mod+period exec --no-startup-id sh $HOME/bin/screenshot w
 bindsym $mod+slash exec --no-startup-id sh $HOME/bin/screenshot s
 
 # rofi
-bindsym $mod+d exec rofi -show drun
+bindsym $mod+d exec rofi -modi drun -show drun
 bindsym $mod+Shift+x exec --no-startup-id $HOME/.config/rofi/scripts/power
 bindsym XF86Explorer exec --no-startup-id python3 $HOME/.config/rofi/scripts/wifi
 bindsym XF86LaunchA exec --no-startup-id python3 $HOME/.config/rofi/scripts/monitor
