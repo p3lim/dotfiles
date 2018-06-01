@@ -42,10 +42,6 @@ focus_follows_mouse no
 new_window pixel 1
 new_float pixel 1
 
-# floating size matches outer borders
-floating_minimum_size 1898 x 1058
-floating_maximum_size 1898 x 1058
-
 # assign applications to workspaces
 for_window [class="Firefox" tiling] move to workspace $w1
 for_window [class="Subl3" tiling] move to workspace $w2
@@ -173,6 +169,6 @@ bindsym $mod+q exec --no-startup-id $HOME/.config/eventd/scripts/status
 bindsym Control+space exec --no-startup-id eventdctl nd dismiss oldest default
 
 # "overlay" applications with fancy binds
-bindsym $mod+c [class="discord" tiling] floating toggle ; [class="discord"] sticky toggle ; [class="discord" tiling] move container to workspace $w9 ; [class="discord" floating] focus
-bindsym $mod+s [class="Spotify" tiling] floating toggle ; [class="Spotify"] sticky toggle ; [class="Spotify" tiling] move container to workspace $w9 ; [class="Spotify" floating] focus
-bindsym $mod+i [class="weechat" tiling] floating toggle ; [class="weechat"] sticky toggle ; [class="weechat" tiling] move container to workspace $w9 ; [class="weechat" floating] focus
+bindsym $mod+c [class="discord"] floating toggle ; [class="discord"] sticky toggle ; [class="discord" tiling] move container to workspace $w9 ; [class="discord" floating] focus ; [class="discord" floating] resize set 1900 1060 ; [class="discord" floating] move absolute position center ;
+bindsym $mod+s [class="Spotify"] floating toggle ; [class="Spotify"] sticky toggle ; [class="Spotify" tiling] move container to workspace $w9 ; [class="Spotify" floating] focus ; [class="Spotify" floating] resize set 1900 1060 ; [class="Spotify" floating] move absolute position center ;
+bindsym $mod+i [class="weechat"] floating toggle ; [class="weechat"] sticky toggle ; [class="weechat" tiling] move container to workspace $w9 ; [class="weechat" floating] focus ; [class="weechat" floating] resize set 1900 1060 ; [class="weechat" floating] move absolute position center ;
