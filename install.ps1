@@ -21,7 +21,7 @@ Push-Location $PSScriptRoot
 link '.config\git\config' "$HOME\.gitconfig"
 link '.config\sublime-text-3\Packages\C++' "$env:APPDATA\Sublime Text 3\Packages\C++"
 link '.mozilla\firefox\profiles.ini' "$env:APPDATA\Mozilla\Firefox\profiles.ini"
-link '.mozilla\firefox\custom\chrome' "$env:APPDATA\Mozilla\Firefox\Profiles\custom\chrome"
+link '.mozilla\firefox\Profiles\p3lim\chrome' "$env:APPDATA\Mozilla\Firefox\Profiles\p3lim\chrome"
 link '.minttyrc' "$env:APPDATA\wsltty\config"
 
 Get-ChildItem '.config\sublime-text-3\Packages\User' | Foreach-Object {

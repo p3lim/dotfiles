@@ -57,7 +57,7 @@ if ! [[ "$(uname -r)" = *Microsoft* ]]; then
 	done
 
 	link '.mozilla/firefox/profiles.ini'
-	link '.mozilla/firefox/custom/chrome'
+	link '.mozilla/firefox/Profiles/p3lim/chrome'
 
 	# install a sublime plugin
 	git clone https://github.com/p3lim/sublime-paste $HOME/.config/sublime-text-3/Packages/Paste
