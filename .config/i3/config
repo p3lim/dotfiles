@@ -42,14 +42,9 @@ focus_follows_mouse no
 new_window pixel 1
 new_float pixel 1
 
-# keep titles for floating windows
-
 # assign applications to workspaces
 for_window [class="Firefox" tiling] move to workspace $w1
-for_window [class="Spotify" tiling] move to workspace $w5
-for_window [class="discord"] move to workspace $w5
 for_window [class="Subl3" tiling] move to workspace $w2
-for_window [class="Enpass-Desktop"] move to workspace $w9
 
 # force floating mode on certain applications/windows
 for_window [window_role="pop-up"] floating enable
@@ -157,7 +152,7 @@ bindsym $mod+period exec --no-startup-id sh $HOME/bin/screenshot w
 bindsym $mod+slash exec --no-startup-id sh $HOME/bin/screenshot s
 
 # rofi
-bindsym $mod+d exec rofi -show drun
+bindsym $mod+d exec rofi -modi drun -show drun
 bindsym $mod+Shift+x exec --no-startup-id $HOME/.config/rofi/scripts/power
 bindsym XF86Explorer exec --no-startup-id python3 $HOME/.config/rofi/scripts/wifi
 bindsym XF86LaunchA exec --no-startup-id python3 $HOME/.config/rofi/scripts/monitor
@@ -166,3 +161,24 @@ bindsym $mod+e exec --no-startup-id $HOME/.config/rofi/scripts/files
 # eventd
 bindsym $mod+q exec --no-startup-id $HOME/.config/eventd/scripts/status
 bindsym Control+space exec --no-startup-id eventdctl nd dismiss oldest default
+
+# scratchpads
+for_window [class="discord"] floating enable
+for_window [class="discord"] resize set 1900 1060
+for_window [class="discord"] move scratchpad
+bindsym $mod+c [class="discord"] scratchpad show ; [class="discord"] move position center
+
+for_window [class="Spotify"] floating enable
+for_window [class="Spotify"] resize set 1900 1060
+for_window [class="Spotify"] move scratchpad
+bindsym $mod+s [class="Spotify"] scratchpad show ; [class="Spotify"] move position center
+
+for_window [class="weechat"] floating enable
+for_window [class="weechat"] resize set 1900 1060
+for_window [class="weechat"] move scratchpad
+bindsym $mod+i [class="weechat"] scratchpad show ; [class="weechat"] move position center
+
+for_window [class="Enpass-Desktop"] floating enable
+for_window [class="Enpass-Desktop"] resize set 1900 1060
+for_window [class="Enpass-Desktop"] move scratchpad
+bindsym $mod+p [class="Enpass-Desktop"] scratchpad show ; [class="Enpass-Desktop"] move position center
