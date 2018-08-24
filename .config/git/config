@@ -54,6 +54,8 @@
 	interactive = auto
 
 [url "https://github.com/"]
-	insteadOf = gh:// # e.g. gh://p3lim/dotfiles.git
+	insteadOf = gh://  # e.g. gh://p3lim/dotfiles.git
+[url "git@github.com:"]
+	insteadOf = gh:    # e.g. gh:p3lim/dotfiles.git
 [url "https://aur.archlinux.org/"]
 	insteadOf = aur:// # e.g. aur://spotify.git

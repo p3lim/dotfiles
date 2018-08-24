@@ -11,6 +11,7 @@
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"highlight_trailing_whitespace": true,
+	"highlight_trailing_whitespace_non_cursor": true,
 	"ignored_packages":
 	[
 		"ShellCommand",

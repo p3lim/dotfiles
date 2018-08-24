@@ -15,3 +15,6 @@ if [[ -d /home/$user/.config/bash_private/ && -z "$SUDO_USER" ]]; then
 fi
 
 unset user
+
+# added by travis gem
+[ -f /home/$user/.travis/travis.sh ] && source /home/p3lim/.travis/travis.sh
