@@ -16,11 +16,11 @@ set $w8 "8"
 set $w9 "9"
 
 # colors
-set_from_resource $text foreground #ffffff
-set_from_resource $active i3wm.active #ffffff
-set_from_resource $inactive i3wm.inactive #333333
-set_from_resource $urgent i3wm.urgent #ee3333
-set_from_resource $background background #000000
+set_from_resource $text       foreground    #ffffff
+set_from_resource $active     i3wm.active   #ffffff
+set_from_resource $inactive   i3wm.inactive #333333
+set_from_resource $urgent     i3wm.urgent   #ee3333
+set_from_resource $background background    #000000
 
 # window colors
 #							border			background		text		indicator
@@ -52,9 +52,6 @@ for_window [window_role="task_dialog"] floating enable
 for_window [instance="galculator"] floating enable
 for_window [class="ranger_dialog"] floating enable
 for_window [instance="megasync"] floating enable
-
-# resize nautilus
-#for_window [class="Nautilus"] resize set 1200 800
 
 # gaps
 gaps inner 10
@@ -163,22 +160,14 @@ bindsym $mod+q exec --no-startup-id $HOME/.config/eventd/scripts/status
 bindsym Control+space exec --no-startup-id eventdctl nd dismiss oldest default
 
 # scratchpads
-for_window [class="discord"] floating enable
-for_window [class="discord"] resize set 1900 1060
-for_window [class="discord"] move scratchpad
-bindsym $mod+c [class="discord"] scratchpad show ; [class="discord"] move position center
+for_window [class="discord"] floating enable, resize set 1900 1060, move scratchpad
+bindsym $mod+c [class="discord"] scratchpad show, move position center
 
-for_window [class="Spotify"] floating enable
-for_window [class="Spotify"] resize set 1900 1060
-for_window [class="Spotify"] move scratchpad
-bindsym $mod+s [class="Spotify"] scratchpad show ; [class="Spotify"] move position center
+for_window [class="Spotify"] floating enable, resize set 1900 1060, move scratchpad
+bindsym $mod+s [class="Spotify"] scratchpad show, move position center
 
-for_window [class="weechat"] floating enable
-for_window [class="weechat"] resize set 1900 1060
-for_window [class="weechat"] move scratchpad
-bindsym $mod+i [class="weechat"] scratchpad show ; [class="weechat"] move position center
+for_window [class="weechat"] floating enable, resize set 1900 1060, move scratchpad
+bindsym $mod+i [class="weechat"] scratchpad show, move position center
 
-for_window [class="Enpass-Desktop"] floating enable
-for_window [class="Enpass-Desktop"] resize set 1900 1060
-for_window [class="Enpass-Desktop"] move scratchpad
-bindsym $mod+p [class="Enpass-Desktop"] scratchpad show ; [class="Enpass-Desktop"] move position center
+for_window [class="Enpass-Desktop"] floating enable, resize set 1900 1060, move scratchpad
+bindsym $mod+p [class="Enpass-Desktop"] scratchpad show, move position center
