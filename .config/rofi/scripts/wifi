@@ -37,9 +37,9 @@ poke(){
 done
 '''
 
-def bash(cmd, async=False):
+def bash(cmd, asyncr=False):
 	p = subprocess.Popen(['sh', '-c', cmd], stdout=subprocess.PIPE)
-	if async:
+	if asyncr:
 		return p
 	else:
 		p.wait()
