@@ -4,7 +4,7 @@
 
 # Ctrl+Backspace/Delete to delete whole words in both directions
 "\e[3;5~": kill-word
-"\C-_": backward-kill-word
+"\C-h": backward-kill-word
 
 # Ctrl+Shift+Backspace/Delete to delete to start/end of line
 "\e[3;6~": kill-line
