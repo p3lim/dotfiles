@@ -1,14 +1,14 @@
 #!/bin/bash
 
-#colors
+# colors
 alias grep='grep --color=auto'
 alias diff='diff --color=auto'
 
-# sorts uppercase first, colors, formats date & file sizes, sorts directories first
-alias ls='LC_COLLATE=C ls --color=auto --time-style=long-iso -hF --group-directories-first'
-
 # shorthands
-alias ll='ls -lA'
+alias ls='exa --group-directories-first --time-style=long-iso -s Name'
+alias ll='ls -l'
+alias la='ll -a'
+alias lt='ll -T'
 alias rmd='rm -rf'
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -19,6 +19,7 @@ alias week='date +%V'
 alias lm='stat -c "%a %n" *' # shows permissions for files in current directory
 alias cpp='rsync -avPh'
 alias mvp='rsync -avPh --remove-source-files'
+alias cat='bat --theme=Toxin --style=numbers,changes'
 
 # confirm before overwrite
 alias cp='cp -i'
@@ -32,6 +33,7 @@ alias py=python3
 alias m=micro
 alias posh=pwsh
 alias xclip='xclip -selection clipboard'
+alias vi=vim
 
 if [[ -z "$SUDO_USER" ]]; then
 	alias subl=subl3
