@@ -7,11 +7,15 @@ export BROWSER=firefox
 export TERM=xterm-256color
 export TZ=Europe/Oslo
 
+# Qt DPI fix for Enpass
+export QT_AUTO_SCREEN_SCALE_FACTOR=0
+
 # history
 export HISTCONTROL=ignoreboth:erasedups
 
-# scripts
-export PATH=$HOME/bin:$PATH
+# paths
+export GOPATH=$HOME/go
+export PATH=$HOME/bin:$PATH:/usr/local/go/bin:$GOPATH/bin
 
 # colors for man pages
 export LESS_TERMCAP_mb=$'\e[0;36m'
