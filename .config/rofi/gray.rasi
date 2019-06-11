@@ -1,3 +1,8 @@
+configuration {
+	display-drun: "Start:";
+	display-calc: "Calc:";
+}
+
 * {
 	/* global settings */
 	font: "ProggyCleanTTSZ 12";
@@ -61,9 +66,4 @@ case-indicator {
 scrollbar {
 	handle-color: @foreground-inactive;
 	handle-width: 1px;
-}
-
-configuration {
-	display-drun: "Start:";
-	display-calc: "Calc:";
 }
