@@ -31,11 +31,9 @@ alias df='df -h'
 # software-specific
 alias py=python3
 alias m=micro
-alias posh=pwsh
 alias xclip='xclip -selection clipboard'
 alias vi=vim
 
 if [[ -z "$SUDO_USER" ]]; then
-	alias subl=subl3
 	alias git="py ~/bin/hub"
 fi
