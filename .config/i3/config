@@ -44,7 +44,7 @@ new_float pixel 1
 
 # assign applications to workspaces
 for_window [class="Firefox" tiling] move to workspace $w1
-for_window [class="Subl3" tiling] move to workspace $w2
+for_window [class="sublime_text" tiling] move to workspace $w2
 
 # force floating mode on certain applications/windows
 for_window [window_role="pop-up"] floating enable
