@@ -168,6 +168,3 @@ bindsym $mod+s [class="Spotify"] scratchpad show, move position center
 
 for_window [class="weechat"] floating enable, resize set 1900 1060, move scratchpad
 bindsym $mod+i [class="weechat"] scratchpad show, move position center
-
-for_window [class="Enpass-Desktop"] floating enable, resize set 1900 1060, move scratchpad
-bindsym $mod+p [class="Enpass-Desktop"] scratchpad show, move position center
