@@ -26,6 +26,3 @@ feh --bg-scale --randomize ~/Pictures/Wallpapers/*/*.jpg
 
 # start some services
 compton -b --config ~/.config/compton/compton.conf
-/opt/Enpass/bin/runenpass.sh startWithTray &
-megasync &
-killmegapopup &
