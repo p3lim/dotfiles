@@ -24,5 +24,8 @@ udiskie -2naT &
 # wallpaper
 feh --bg-scale --randomize ~/Pictures/Wallpapers/*/*.jpg
 
+# for some reason bat's cache is not persistent
+bat cache --init &
+
 # start some services
 compton -b --config ~/.config/compton/compton.conf
