@@ -24,11 +24,11 @@ if [[ -f "$selection" ]]; then
 	# it's a file, choose what to do based on mime type
 	if [[ "$selection" = *.md ]]; then
 		# special case for markdown
-		subl3 -- "$selection"
+		subl -- "$selection"
 	else
 		mime=$(file -i "$selection" | awk -F': ' '{print $2}')
 		if [[ "$mime" = text* ]]; then
-			subl3 -- "$selection"
+			subl -- "$selection"
 		elif [[ "$mime" = image* ]]; then
 			feh -- "$selection"
 		elif [[ "$mime" = video* ]]; then
